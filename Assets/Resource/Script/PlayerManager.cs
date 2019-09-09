@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour, IManager
 {
-    [SerializeField] private GameManager GameManager;
+    private GameManager GameManager;
     private MapManager MapManager;
 
 
@@ -23,11 +23,12 @@ public class PlayerManager : MonoBehaviour, IManager
         }
     }
 
-    public void Set_Manager(GameData gamedata)  //Awake에 해당한다. 시작시 호출
+    public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
+        this.GameManager = gamemanager;
         MapManager = GameManager.MapManager;
 
-        if (gamedata != null)    //게임 데이터가 있을때 Load 해준다
+        if (GameManager.Get_GameData() != null)    //게임 데이터가 있을때 Load 해준다
         {
 
 

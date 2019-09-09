@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour, IManager
 {
-    [SerializeField] private GameManager GameManager;
+    private GameManager GameManager;
     private PlayerManager PlayerManager;
 
 
     Dictionary<KeyCode, Action> First_key_Check_Dictionary;         //입력키와 호출되는 함수들을 저장하자
     Dictionary<KeyCode, Action> Continuous_key_Check_Dictionary;     //(나중에 설정으로 키가 바뀔 수 도 있으니)
 
-    public void Set_Manager(GameData gamedata)  //Awake에 해당한다. 시작시 호출
+    public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
+        this.GameManager = gamemanager;
         PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
 
 

@@ -37,7 +37,7 @@ public enum eDirection
 
 public class MapManager : MonoBehaviour, IManager
 {
-    [SerializeField] private GameManager GameManager;
+    private GameManager GameManager;
     private PlayerManager PlayerManager;
 
     [SerializeField] private List<Tile> Tiles;
@@ -48,14 +48,15 @@ public class MapManager : MonoBehaviour, IManager
     int roomMax = 14;
 
 
-    public void Set_Manager(GameData gamedata)  //Awake에 해당한다. 시작시 호출
+    public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
+        this.GameManager = gamemanager;
         PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
 
         MapSize = 64;
         MapData = new TIle_Data[64 + 1, 64 + 1];
 
-        if (gamedata != null)    //게임 데이터가 있을때 Load 해준다
+        if (GameManager.Get_GameData() != null)    //게임 데이터가 있을때 Load 해준다
         {
 
         }
@@ -207,10 +208,6 @@ public class MapManager : MonoBehaviour, IManager
 
     void DrawRoom(int sx, int sy, int ex, int ey)
     {
-        Debug.Log(sx);
-        Debug.Log(ex);
-        Debug.Log(sy);
-        Debug.Log(ey);
 
         for (int x = sx; x <= ex; x++)
         {

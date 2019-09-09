@@ -10,14 +10,12 @@ public class GameManager : MonoBehaviour
     public InputManager InputManager;
 
 
-
-
+    private GameData gamedata = null;
 
     //시작 작업
     void Awake()
     {
         Set_Managers();
-
 
     }
 
@@ -29,14 +27,19 @@ public class GameManager : MonoBehaviour
 
     private void Set_Managers()
     {
-        PlayerManager.Set_Manager(null);
-        MapManager.Set_Manager(null);
-        InputManager.Set_Manager(null);
+        PlayerManager.Set_Manager(this);
+        MapManager.Set_Manager(this);
+        InputManager.Set_Manager(this);
     }
 
     private void Update_Managers()
     {
         InputManager.Update_Manager();
+    }
+
+    public GameData Get_GameData()
+    {
+        return this.gamedata;
     }
 }
 
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
 public interface IManager
 {
 
-    void Set_Manager(GameData gamedata);
+    void Set_Manager(GameManager gamemanager);
     void Update_Manager();
 
 }
