@@ -92,6 +92,7 @@ public class MapManager : MonoBehaviour, IManager
 
         return MapData[x, y];
     }
+    #region BuildMap
 
     private void BuildMap()
     {
@@ -258,7 +259,7 @@ public class MapManager : MonoBehaviour, IManager
 
         return true;
     }
-
+    #endregion
 
     public void Update_Tiles()
     {
@@ -284,7 +285,6 @@ public class MapManager : MonoBehaviour, IManager
 
                     //Tiles[i, j].Tile_Data = MapData[x, y];
                     //Tile_Objects[x, y] =  (int)MapData[x, y].Tile_Sort 
-
                 }
 
                 y++;
@@ -301,6 +301,5 @@ public class MapManager : MonoBehaviour, IManager
     {
         return ((x + y * 10));
     }
-
 
 }

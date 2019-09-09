@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour, IManager
 {
     private GameManager GameManager;
     private PlayerManager PlayerManager;
+    private CameraManager CameraManager;
 
 
     Dictionary<KeyCode, Action> First_key_Check_Dictionary;         //입력키와 호출되는 함수들을 저장하자
@@ -16,14 +17,15 @@ public class InputManager : MonoBehaviour, IManager
     {
         this.GameManager = gamemanager;
         PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
-
+        CameraManager = GameManager.CameraManager;
 
         First_key_Check_Dictionary = new Dictionary<KeyCode, Action>     //지속적인 입력을 감지하는 KeyCode들
         {
             { KeyCode.UpArrow, () => PlayerManager.Move_Player(eDirection.Up) },
             { KeyCode.LeftArrow, () => PlayerManager.Move_Player(eDirection.Left) },
             { KeyCode.DownArrow, () => PlayerManager.Move_Player(eDirection.Down) },
-            { KeyCode.RightArrow, () => PlayerManager.Move_Player(eDirection.Right) }
+            { KeyCode.RightArrow, () => PlayerManager.Move_Player(eDirection.Right) },
+            { KeyCode.Mouse0, () => CameraManager.Get_GameObject_By_Lay() }
         };      //나중에는 데이터가 있으면 키설정을 불러오고 없으면 이대로 초기화하도록 수정하자
 
     }

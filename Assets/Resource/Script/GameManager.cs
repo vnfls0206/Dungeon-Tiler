@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public MapManager MapManager;
     public PlayerManager PlayerManager;
     public InputManager InputManager;
+    public CameraManager CameraManager;
 
 
     private GameData gamedata = null;
@@ -30,11 +31,13 @@ public class GameManager : MonoBehaviour
         PlayerManager.Set_Manager(this);
         MapManager.Set_Manager(this);
         InputManager.Set_Manager(this);
+        CameraManager.Set_Manager(this);
     }
 
     private void Update_Managers()
     {
         InputManager.Update_Manager();
+        CameraManager.Update_Manager();
     }
 
     public GameData Get_GameData()
