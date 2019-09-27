@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     //시작 작업
     void Awake()
     {
+        Screen.SetResolution(1280, 720, true);
         Set_Managers();
 
     }
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     private void Update_Managers()
     {
         InputManager.Update_Manager();
+        MapManager.Update_Manager();
         CameraManager.Update_Manager();
     }
 

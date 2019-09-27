@@ -7,8 +7,12 @@ public class InputManager : MonoBehaviour, IManager
 {
     private GameManager GameManager;
     private PlayerManager PlayerManager;
+    private MapManager MapManager;
     private CameraManager CameraManager;
 
+    private TIle_Data Target;
+    private Vector3 prePos;
+    private bool Is_PointerDown;
 
     Dictionary<KeyCode, Action> First_key_Check_Dictionary;         //입력키와 호출되는 함수들을 저장하자
     Dictionary<KeyCode, Action> Continuous_key_Check_Dictionary;     //(나중에 설정으로 키가 바뀔 수 도 있으니)
@@ -17,15 +21,16 @@ public class InputManager : MonoBehaviour, IManager
     {
         this.GameManager = gamemanager;
         PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
+        MapManager = GameManager.MapManager;
         CameraManager = GameManager.CameraManager;
+
+        Is_PointerDown = false;
+
 
         First_key_Check_Dictionary = new Dictionary<KeyCode, Action>     //지속적인 입력을 감지하는 KeyCode들
         {
-            { KeyCode.UpArrow, () => PlayerManager.Move_Player(eDirection.Up) },
-            { KeyCode.LeftArrow, () => PlayerManager.Move_Player(eDirection.Left) },
-            { KeyCode.DownArrow, () => PlayerManager.Move_Player(eDirection.Down) },
-            { KeyCode.RightArrow, () => PlayerManager.Move_Player(eDirection.Right) },
-            { KeyCode.Mouse0, () => CameraManager.Get_GameObject_By_Lay() }
+            //{ KeyCode.Mouse0, OnPointerDown}
+            //,{ KeyCode.W, () => MapManager.SetTile(1, 2, eTile.WALL, Sight_Sort.Black)}       //참고용을 붙여놓음
         };      //나중에는 데이터가 있으면 키설정을 불러오고 없으면 이대로 초기화하도록 수정하자
 
     }
@@ -35,14 +40,72 @@ public class InputManager : MonoBehaviour, IManager
 
         if (Input.anyKeyDown)       //첫번째 입력만을 감지
         {
-            foreach (KeyValuePair<KeyCode, Action> dic in First_key_Check_Dictionary)     //First_key_Check_Dictionary에 등록된 KeyCode가 입력되면
+            if(First_key_Check_Dictionary.Count != 0)
             {
-                if (Input.GetKeyDown(dic.Key))
+                foreach (KeyValuePair<KeyCode, Action> dic in First_key_Check_Dictionary)     //First_key_Check_Dictionary에 등록된 KeyCode가 입력되면
                 {
-                    dic.Value();            //해당되는 함수를 호출한다.
+                    if (Input.GetKeyDown(dic.Key))
+                    {
+                        dic.Value();            //해당되는 함수를 호출한다.
+                    }
                 }
             }
         }
+
+#if (UNITY_ANDROID || UNITY_IPHONE) && !UNITY_EDITOR
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                OnPointerDown(touch.position);
+                prePos = touch.position - touch.deltaPosition;
+            }
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                Vector3 nowPos = touch.position - touch.deltaPosition;
+                Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
+                CameraManager.Position = CameraManager.Position + movePos;
+                prePos = touch.position - touch.deltaPosition;
+
+                Target = null;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                OnPointerUp();
+            }
+        }
+
+#else
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnPointerDown(Input.mousePosition);
+            prePos = Input.mousePosition;
+        }
+
+        // 마우스가 떼짐
+        if (Input.GetMouseButtonUp(0))
+        {
+            OnPointerUp();
+
+        }
+
+        if (Is_PointerDown)
+        {
+            Vector3 nowPos = Input.mousePosition;
+            if(nowPos != prePos)
+            {
+                Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
+               
+                CameraManager.Position = CameraManager.Position + movePos;
+                prePos = Input.mousePosition;
+
+                Target = null;
+            }
+
+        }
+#endif
 
         //if (Input.anyKey)   //지속적인 입력을 감지
         //{
@@ -58,6 +121,35 @@ public class InputManager : MonoBehaviour, IManager
     }
 
 
+    private void OnPointerDown(Vector3 touch_position)
+    {
+        Target = MapManager.Tile_Touch(touch_position);
+        if (Target != null)
+        {
+            //MapManager.Tile_Target(Target);
+        }
+        Is_PointerDown = true;
+    }
+
+    private void OnPointerUp()
+    {
+        Is_PointerDown = false;
+
+        if (Target != null)  //Target 오브젝트가 null이 아닐때
+        {
+            if (MapManager.Is_Move_Able_Tile(Target.Tile_Sort))  //클릭한 타일이 이동가능 타일일 경우
+            {
+                StartCoroutine(PlayerManager.Move_To_Dex(Target));
+            }
+        }
+
+        Target = null;
+    }
+
+    public bool Is_Dragging()
+    {
+        return Is_PointerDown;
+    }
 
 
 
