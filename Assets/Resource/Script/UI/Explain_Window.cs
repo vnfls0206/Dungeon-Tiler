@@ -12,17 +12,11 @@ public class Explain_Window : MonoBehaviour
     public Text  item_desc;
 
     public GameObject Window;
+    
 
-    void Update()
-    {
-        if (WindowsEnable == true)
-            Window.SetActive(true);
-        else
-            Window.SetActive(false);
-    }
     public void OnWindow()
     {
-        WindowsEnable = !WindowsEnable;
+        Window.SetActive(!Window.activeSelf);
     }
 
 }

@@ -245,11 +245,8 @@ public class MapManager : MonoBehaviour, IManager
 
         if(is_width)
         {
-            Debug.Log(width + 1);
-            Debug.Log(height + 1);
-
-            if ((pattern[y - sy , x - sx - 1] != Get_Stage_Data().Wall &&
-                pattern[y - sy , x - sx + 1] != Get_Stage_Data().Wall &&
+            if ((pattern[y - sy , x - sx - 1] != Get_Stage_Data().Wall ||
+                pattern[y - sy , x - sx + 1] != Get_Stage_Data().Wall ||
                 pattern[dy - sy, dx - sx] == Get_Stage_Data().Wall))
             {
                 pattern = null;
@@ -257,8 +254,8 @@ public class MapManager : MonoBehaviour, IManager
         }
         else if(!is_width)
         {
-            if ((pattern[y - sy - 1, x - sx] != Get_Stage_Data().Wall &&
-                 pattern[y - sy + 1, x - sx] != Get_Stage_Data().Wall &&
+            if ((pattern[y - sy - 1, x - sx] != Get_Stage_Data().Wall ||
+                 pattern[y - sy + 1, x - sx] != Get_Stage_Data().Wall ||
                  pattern[dy - sy, dx - sx] == Get_Stage_Data().Wall))
             {
                 pattern = null;

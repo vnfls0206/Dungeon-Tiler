@@ -139,7 +139,10 @@ public class InputManager : MonoBehaviour, IManager
         {
             if (MapManager.Is_Move_Able_Tile(Target.Tile_Sort))  //클릭한 타일이 이동가능 타일일 경우
             {
-                StartCoroutine(PlayerManager.Move_To_Dex(Target));
+                if(Target.Sight_Sort != Sight_Sort.Black)
+                {
+                    StartCoroutine(PlayerManager.Move_To_Dex(Target));
+                }
             }
         }
 

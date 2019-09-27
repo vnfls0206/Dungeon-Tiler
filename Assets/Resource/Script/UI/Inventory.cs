@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
     public GameObject inventory;                    // slot 부모객체
 
 
-    void Start()
+    public void Set_UI()
     {
         inventoryList_Weapon = new List<Item>();
         inventoryList_Tile = new List<Item>();
@@ -39,7 +39,7 @@ public class Inventory : MonoBehaviour
 
         ShowItem(0);
     }
-    void Update()
+    public void Update_UI()
     {
         if(inventoryEnabled == true)
             inventory.SetActive(true);

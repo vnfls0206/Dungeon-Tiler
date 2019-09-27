@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour, IManager
     private GameManager GameManager;
     private List<IUI> Active_UI_List;
 
+    [SerializeField] private Inventory Inventory;
 
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
@@ -23,12 +24,14 @@ public class UIManager : MonoBehaviour, IManager
             
         }
 
+        Inventory.Set_UI();
+
 
     }
 
     public void Update_Manager()    //Update에 해당, 매 프레임마다 갱신
     {
-
+        Inventory.Update_UI();
     }
 
     public bool Is_UI_Active()

@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Manager")]
     public MapManager MapManager;
+    public UIManager UIManager;
     public PlayerManager PlayerManager;
     public InputManager InputManager;
     public CameraManager CameraManager;
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         PlayerManager.Set_Manager(this);
         MapManager.Set_Manager(this);
+        UIManager.Set_Manager(this);
         InputManager.Set_Manager(this);
         CameraManager.Set_Manager(this);
     }
@@ -39,6 +41,7 @@ public class GameManager : MonoBehaviour
     {
         InputManager.Update_Manager();
         MapManager.Update_Manager();
+        UIManager.Update_Manager();
         CameraManager.Update_Manager();
     }
 
