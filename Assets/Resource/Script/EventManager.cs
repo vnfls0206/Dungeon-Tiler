@@ -15,6 +15,8 @@ public class EventManager : MonoBehaviour, IManager
     {
         this.GameManager = gamemanager;
 
+        TF_Event = null;
+
         TF = false;      //초기값은 false;
         TF_Timer = 0f;
 

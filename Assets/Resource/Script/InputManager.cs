@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour, IManager
     {
         this.GameManager = gamemanager;
         PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
+        UIManager = GameManager.UIManager;
         MapManager = GameManager.MapManager;
         CameraManager = GameManager.CameraManager;
 

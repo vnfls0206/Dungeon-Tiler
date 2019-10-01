@@ -10,12 +10,8 @@ public class GameManager : MonoBehaviour
     public PlayerManager PlayerManager;
     public InputManager InputManager;
     public CameraManager CameraManager;
-<<<<<<< Updated upstream
     public EventManager EventManager;
-=======
-    //0929 지운
     public EnemyManager EnemyManager;
->>>>>>> Stashed changes
 
     private GameData gamedata = null;
 
@@ -35,17 +31,13 @@ public class GameManager : MonoBehaviour
 
     private void Set_Managers()
     {
+        EventManager.Set_Manager(this);
         PlayerManager.Set_Manager(this);
         MapManager.Set_Manager(this);
         UIManager.Set_Manager(this);
         InputManager.Set_Manager(this);
         CameraManager.Set_Manager(this);
-<<<<<<< Updated upstream
-        EventManager.Set_Manager(this);
-=======
-        //0929 지운
         EnemyManager.Set_Manager(this);
->>>>>>> Stashed changes
     }
 
     private void Update_Managers()
@@ -54,12 +46,8 @@ public class GameManager : MonoBehaviour
         MapManager.Update_Manager();
         UIManager.Update_Manager();
         CameraManager.Update_Manager();
-<<<<<<< Updated upstream
         EventManager.Update_Manager();
-=======
-        //0929 지운
         EnemyManager.Update_Manager();
->>>>>>> Stashed changes
     }
 
     public GameData Get_GameData()
