@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 6f59aeb4a423c6843a3019ad7a596fa1, type: 3}
   m_Name: Stage_Data
-  m_EditorClassIdentifier: Assembly-CSharp::Stage_Data_Object
+  m_EditorClassIdentifier: 
   stage_Data_List:
   - Stage_Num: 1
     Nomal: 1
