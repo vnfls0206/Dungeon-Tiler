@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour, IManager
     private MapManager MapManager;
     private UIManager UIManager;
     private CameraManager CameraManager;
+    //0929 지운
+    private EnemyManager EnemyManager;
 
     private Tile Target;
     private Vector3 prePos;
@@ -21,10 +23,9 @@ public class InputManager : MonoBehaviour, IManager
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
         this.GameManager = gamemanager;
-        this.PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
-        this.MapManager = GameManager.MapManager;
-        this.UIManager = GameManager.UIManager;
-        this.CameraManager = GameManager.CameraManager;
+        PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
+        MapManager = GameManager.MapManager;
+        CameraManager = GameManager.CameraManager;
 
         Is_PointerDown = false;
 
