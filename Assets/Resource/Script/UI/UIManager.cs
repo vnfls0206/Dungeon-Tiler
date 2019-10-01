@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour, IManager
 
     public void Update_Manager()    //Update에 해당, 매 프레임마다 갱신
     {
-        Inventory.Update_UI();
+        //Inventory.Update_UI();
         option.Update_UI();
     }
 
