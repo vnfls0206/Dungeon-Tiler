@@ -11,9 +11,7 @@ public class Tile_Data_Object : ScriptableObject
 [System.Serializable]
 public class Tile_Data
 {
-    public int TIle_Num;
     public string Tile_Nume;
     public string Tile_Des;
-    public eTile Tile_Sort;
 
 }
