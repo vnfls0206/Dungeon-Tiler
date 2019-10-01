@@ -14,16 +14,13 @@ public class Button : MonoBehaviour
     public void WeaponTabActive()
     {
         inventory.ShowItem(ItemType.Weapon);
-        print("WeaponTabActive");
     }
     public void TileTabActive()
     {
         inventory.ShowItem(ItemType.Tile);
-        print("TileTabActive");
     }
     public void EtcTabActive()
     {
         inventory.ShowItem(ItemType.Etc);
-        print("EtcTabActive");
     }
 }
