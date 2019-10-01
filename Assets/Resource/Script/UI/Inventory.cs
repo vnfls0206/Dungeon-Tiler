@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
     public List<Item> inventoryList_Etc;       //가지고 있는 기타 아이템 리스트
 
     public GameObject inventory;                    // slot 부모객체
+    public Explain_Window Explain_Window;
+    public Log log;
 
 
     public void Set_UI()
@@ -37,11 +39,11 @@ public class Inventory : MonoBehaviour
         AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
         AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),1));
 
-        ShowItem(0);
+        ShowItem(ItemType.Weapon);
     }
     public void Update_UI()
     {
-        if(inventoryEnabled == true)
+        if (inventoryEnabled == true)
             inventory.SetActive(true);
         else
             inventory.SetActive(false);
@@ -52,19 +54,28 @@ public class Inventory : MonoBehaviour
         {
             case ItemType.Weapon:
                 if (inventoryList_Weapon.Count < 20)
+                {
                     inventoryList_Weapon.Add(_item);
+                    ShowItem(ItemType.Weapon);
+                }
                 else
                     print("웨폰인벤토리 가득참");
                 break;
             case ItemType.Tile:
                 if (inventoryList_Tile.Count < 20)
+                {
                     inventoryList_Tile.Add(_item);
+                    ShowItem(ItemType.Tile);
+                }
                 else
                     print("타일인벤토리 가득참");
                 break;
             case ItemType.Etc:
                 if (inventoryList_Etc.Count < 20)
+                {
                     inventoryList_Etc.Add(_item);
+                    ShowItem(ItemType.Etc);
+                }
                 else
                     print("기타 인벤토리 가득참");
                 break;
@@ -74,7 +85,7 @@ public class Inventory : MonoBehaviour
     {
         RemoveSlot();
 
-        switch(itemType)
+        switch (itemType)
         {
             case ItemType.Weapon:
                 for(int i=0; i< inventoryList_Weapon.Count; i++)
