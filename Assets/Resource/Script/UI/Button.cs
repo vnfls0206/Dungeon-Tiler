@@ -9,7 +9,7 @@ public class Button : MonoBehaviour
     // Start is called before the first frame update
     public void OnInventory()
     {
-        inventory.inventoryEnabled = !inventory.inventoryEnabled;
+        inventory.InventoryEnabled = !inventory.InventoryEnabled;
     }
     public void WeaponTabActive()
     {

@@ -59,7 +59,6 @@ public class CameraManager : MonoBehaviour, IManager
 
         this.transform.position = Target_Vector2 - (rot * Vector3.forward * dist) + (Vector3.up * Height);
 
-
         this.transform.LookAt(Target);
     }
 

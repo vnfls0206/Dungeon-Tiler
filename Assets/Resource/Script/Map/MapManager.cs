@@ -4,20 +4,24 @@ using UnityEngine;
 using UnityEngine.U2D;
 
 [System.Serializable]
-public class TIle_Data
+public class Tile
 {
+    public int x, y;
     public Vector3 Tile_Position;
     public eTile Tile_Sort;
     public Sight_Sort Sight_Sort;
 
 
-    public TIle_Data(Vector3 tile_position ,eTile tile_sort, Sight_Sort sight_sort)
+    public Tile(int X, int Y, Vector3 tile_position, eTile Tile_sort, Sight_Sort sight_sort)
     {
+        this.x = X;
+        this.y = Y;
         this.Tile_Position = tile_position;
-        this.Tile_Sort = tile_sort;
+        this.Tile_Sort = Tile_sort;
         this.Sight_Sort = sight_sort;
     }
 }
+
 
 [System.Serializable]
 public class RoomData
@@ -67,6 +71,9 @@ public class MapManager : MonoBehaviour, IManager
     private PlayerManager PlayerManager;
     private CameraManager CameraManager;
 
+    [Header("Component")]
+    [SerializeField] private MapHightLight MapHightLight;
+    [SerializeField] private MapTarget MapTarget;
     private A_Star A_Star;
     private ShadowCast ShadowCast;
     private MapPattern MapPattern;
@@ -79,8 +86,10 @@ public class MapManager : MonoBehaviour, IManager
     [Header("ScriptableObject")]
     [SerializeField] private Stage_Data_Object Stage_Data;
 
+    //public Event.Color_Set_Event_Handler HL_Event;
 
-    private TIle_Data[,] MapData { get; set; }
+
+    private Tile[,] MapData { get; set; }
     private int Current_Stage { get; set; }
     public int MapSize { get; set; }
     private int VisualRange { get; set; }
@@ -89,7 +98,7 @@ public class MapManager : MonoBehaviour, IManager
     private int roomMax;
 
     private List<int> VisibleOctants;   //8방위 List
-    private Tile[,] Tiles;              //오브젝트 풀링 Tile들
+    private Tile_Obj[,] Tiles;              //오브젝트 풀링 Tile들
     private List<RoomData> RoomData_List;       //RoomData 저장 List
 
 
@@ -102,11 +111,12 @@ public class MapManager : MonoBehaviour, IManager
         ShadowCast = new ShadowCast(this);  //전장의 안개
         A_Star = new A_Star(this);       //A*알고리즘
         MapPattern = new MapPattern(this);   //맵 패턴 함수
+        MapHightLight.Set_Map(this);
 
         VisibleOctants = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
-        Tiles = new Tile[15, 15];                                     
+        Tiles = new Tile_Obj[15, 15];                                     
         MapSize = 64;
-        VisualRange = 6;
+        VisualRange = 8;
         roomMin = 6;
         roomMax = 13;
 
@@ -117,7 +127,7 @@ public class MapManager : MonoBehaviour, IManager
         else                    //게임 데이터가 없을때 시작
         {
             Current_Stage = 1;
-            MapData = new TIle_Data[MapSize + 1, MapSize + 1];
+            MapData = new Tile[MapSize + 1, MapSize + 1];
             RoomData_List = new List<RoomData>();
 
             BuildMap();                     //맵 정보 생성
@@ -127,19 +137,20 @@ public class MapManager : MonoBehaviour, IManager
         {
             for (int j = 0; j < 15; j++)
             {
-                Tiles[i, j] = Tile_Objs.transform.GetChild(Get_Array_Count(i, j)).GetComponent<Tile>();
-                Tiles[i, j].Set_Tile(this);
+                Tiles[i, j] = Tile_Objs.transform.GetChild(Get_Array_Count(i, j)).GetComponent<Tile_Obj>();
+                Tiles[i, j].Set_Tile(this, new Array_Index(i, j));
             }
             
         }
         Update_Sight();
         Update_Tiles();                   //맵 정보를 기반으로 Tile 업데이트
+        MapTarget.Set_Map(this);
     }
 
     private Vector3 pre_C_postion;
     public void Update_Manager()    //Update에 해당, 매 프레임마다 갱신
     {
-
+        //MapHightLight.Update_Map();
     }
 
 
@@ -412,20 +423,20 @@ public class MapManager : MonoBehaviour, IManager
     #endregion
 
 
-    #region Map_Function
-    public void SetTile(int x, int y, eTile tile_sort, Sight_Sort sight_sort)
+    #region Map_Functions
+    public void SetTile(int x, int y, eTile Tile_sort, Sight_Sort sight_sort)
     {
         if (MapData[x, y] == null)
         {
-            MapData[x, y] = new TIle_Data(new Vector3(x, y), tile_sort, sight_sort);
+            MapData[x, y] = new Tile(x, y, new Vector3(x, y), Tile_sort, sight_sort);
         }
         else
         {
-            MapData[x, y].Tile_Sort = tile_sort;
+            MapData[x, y].Tile_Sort = Tile_sort;
         }
     }
 
-    public TIle_Data GetTile(int x, int y)
+    public Tile GetTile(int x, int y)
     {
         if (Is_Map_Tile(x, y))       //해당 좌표에 타일이 있는가
         {
@@ -439,7 +450,7 @@ public class MapManager : MonoBehaviour, IManager
 
     }
 
-    public TIle_Data Get_Tile_By_Vector3(Vector3 Position)
+    public Tile Get_Tile_By_Vector3(Vector3 Position)
     {
         if (Position.x >= 0 && Position.y <= MapSize &&
             Position.x >= 0 && Position.y <= MapSize)       //해당 좌표에 타일이 있는가
@@ -504,8 +515,42 @@ public class MapManager : MonoBehaviour, IManager
         return Tile_Textures[Sprite_Num];
     }
 
+    public Tile_Obj Get_TileObj(int x, int y)
+    {
+        return Tiles[x, y];
+    }
+
+    public Tile Get_PTile()
+    {
+        return Get_Tile_By_Vector3(PlayerManager.GetPosition());
+    }
+
+
     #endregion
 
+    #region Target
+
+    public bool Set_Map_Target(Tile tile)
+    {
+        return MapTarget.Is_In_Target(tile);
+
+    }
+
+    #endregion
+
+    #region HighLight
+
+    public bool Get_HightLight_Active()
+    {
+        return MapHightLight.HL_Active;
+    }
+
+    public bool Is_HighLight_Tile(Tile tile)
+    {
+        return MapHightLight.Is_HighLight_Tile(tile);
+    }
+
+    #endregion
 
     public void Ready_To_Update_Sight()
     {
@@ -535,7 +580,7 @@ public class MapManager : MonoBehaviour, IManager
         foreach (int i in VisibleOctants)                       //Shadow Cast호출
             ShadowCast.ScanOctant(VisualRange, Player_position, Sight_Sort.White, MapData, 1, i, 1.0, 0.0);
 
-        Update_Tiles_In_Move();
+        Update_Tiles();
     }
 
     public void Update_Tiles_In_Move()
@@ -556,7 +601,7 @@ public class MapManager : MonoBehaviour, IManager
                         SetTile(x, y, eTile.NULL, Sight_Sort.Black);
 
 
-                    Tiles[i, j].Tile_Data = GetTile(x, y);
+                    Tiles[i, j].Tile = GetTile(x, y);
 
                     if (Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
                     {
@@ -595,7 +640,7 @@ public class MapManager : MonoBehaviour, IManager
                         SetTile(x, y, eTile.NULL, Sight_Sort.Black);
 
 
-                    Tiles[i, j].Tile_Data = GetTile(x, y);
+                    Tiles[i, j].Tile = GetTile(x, y);
 
                     if(Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
                     {
@@ -618,30 +663,42 @@ public class MapManager : MonoBehaviour, IManager
     }
 
 
-    public TIle_Data Tile_Touch(Vector3 touch_position)
+    public Tile Tile_Touch(Vector3 touch_position)
     {
-        GameObject Touched_Object = CameraManager.Get_GameObject_By_Lay(touch_position);
-
-        if (Touched_Object != null) //터치한 지점에 오브젝트가 있다면
+        if(!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
         {
-            Vector3 Touched_Position = Touched_Object.transform.position;
-            TIle_Data Touched_Tile = GetTile((int)Touched_Position.x, (int)Touched_Position.y);
+            GameObject Touched_Object = CameraManager.Get_GameObject_By_Lay(touch_position);
 
-            if (Touched_Tile != null)   //해당 오브젝트가 타일일 경우
+            if (Touched_Object != null) //터치한 지점에 오브젝트가 있다면
             {
-                return Touched_Tile;
+                int x = (int)Touched_Object.transform.position.x;
+                int y = (int)Touched_Object.transform.position.y;
 
+                Tile Touched_Tile = GetTile(x, y);
+
+                if (Touched_Tile != null)   //해당 오브젝트가 타일일 경우
+                {
+                    return Touched_Tile;
+
+                }
             }
         }
+
 
         return null;
     }
 
 
     
-    public List<TIle_Data> A_Star_PathFinding(TIle_Data Start_Position, TIle_Data Dex_Position)
+    public List<Tile> A_Star_PathFinding(Tile Start_Position, Tile Dex_Position)
     {
         return A_Star.A_star(Start_Position, Dex_Position, MapData);
+    }
+
+    public void HL()
+    {
+        MapHightLight.Set_Activate(Get_PTile(), 3);
+
     }
 
 }

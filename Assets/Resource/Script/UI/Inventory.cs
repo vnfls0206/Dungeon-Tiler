@@ -8,8 +8,30 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public bool inventoryEnabled;
+    private UIManager UIManager;
 
+    private bool inventoryenabled;
+    public bool InventoryEnabled
+    {
+        get
+        {
+            return inventoryenabled;
+        }
+        set
+        {
+            inventoryenabled = value;
+            if(value)
+            {
+                inventory.SetActive(true);
+                UIManager.Active_UI_Count++;
+            }
+            else if(!value)
+            {
+                inventory.SetActive(false);
+                UIManager.Active_UI_Count--;
+            }
+        }
+    }
     public SpriteAtlas spriteAtlas;
     private InventroySlot[] slots;          //인벤토리 슬롯들
 
@@ -20,8 +42,10 @@ public class Inventory : MonoBehaviour
     public GameObject inventory;                    // slot 부모객체
 
 
-    public void Set_UI()
+    public void Set_UI(UIManager uImanager)
     {
+        this.UIManager = uImanager;
+
         inventoryList_Weapon = new List<Item>();
         inventoryList_Tile = new List<Item>();
         inventoryList_Etc = new List<Item>();
@@ -39,13 +63,7 @@ public class Inventory : MonoBehaviour
 
         ShowItem(0);
     }
-    public void Update_UI()
-    {
-        if(inventoryEnabled == true)
-            inventory.SetActive(true);
-        else
-            inventory.SetActive(false);
-    }
+
     public void AddItem(Item _item)
     {
         switch(_item.itemType)

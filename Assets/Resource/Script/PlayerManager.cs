@@ -57,19 +57,19 @@ public class PlayerManager : MonoBehaviour, IManager
         CameraManager.Set_Camera_Target(this.transform);
     }
 
-    public IEnumerator Move_To_Dex(TIle_Data Dex_position)
+    public IEnumerator Move_To_Dex(Tile Dex_position)
     {
         CameraManager.Set_Camera_Target(this.transform);
         MapManager.Update_Sight();
 
-        TIle_Data StartPosition = MapManager.Get_Tile_By_Vector3(Player_Position);
-        List<TIle_Data> Path =
+        Tile StartPosition = MapManager.Get_Tile_By_Vector3(Player_Position);
+        List<Tile> Path =
             MapManager.A_Star_PathFinding(
                 StartPosition,                                      //현재 플레이어 위치
                 Dex_position);                                       //도착위치
 
 
-        foreach (TIle_Data i in Path)
+        foreach (Tile i in Path)
         {
             MapManager.Ready_To_Update_Sight();      //Player Position 변경전에 호출한다.
             yield return Move_Player(i);
@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviour, IManager
         yield return null;
     }
 
-    private IEnumerator Move_Player(TIle_Data temp)
+    private IEnumerator Move_Player(Tile temp)
     {
 
         Vector3 curvePoint;
@@ -87,8 +87,8 @@ public class PlayerManager : MonoBehaviour, IManager
 
         float t = 0f;
 
-        curvePoint = new Vector3((Player_Position.x + temp.Tile_Position.x) / 2f,
-        (Player_Position.y + temp.Tile_Position.y) / 2f, -0.7f);
+        curvePoint = new Vector3((Player_Position.x + temp.x) / 2f,
+        (Player_Position.y + temp.y) / 2f, -1f);
 
 
         Vector3 Starting_Postionm = Player_Position;

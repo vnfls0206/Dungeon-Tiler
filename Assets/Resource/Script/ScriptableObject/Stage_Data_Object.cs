@@ -9,6 +9,9 @@ public class Stage_Data_Object : ScriptableObject
 
 }
 
+
+
+
 [System.Serializable]
 public class Stage_Data
 {

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public PlayerManager PlayerManager;
     public InputManager InputManager;
     public CameraManager CameraManager;
-
+    public EventManager EventManager;
 
     private GameData gamedata = null;
 
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         UIManager.Set_Manager(this);
         InputManager.Set_Manager(this);
         CameraManager.Set_Manager(this);
+        EventManager.Set_Manager(this);
     }
 
     private void Update_Managers()
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         MapManager.Update_Manager();
         UIManager.Update_Manager();
         CameraManager.Update_Manager();
+        EventManager.Update_Manager();
     }
 
     public GameData Get_GameData()
@@ -50,6 +52,18 @@ public class GameManager : MonoBehaviour
         return this.gamedata;
     }
 }
+
+#region Class
+public class Array_Index
+{
+    public int x, y;
+    public Array_Index(int X, int Y)
+    {
+        this.x = X;
+        this.y = Y;
+    }
+}
+#endregion
 
 #region Manager_Interface
 public interface IManager

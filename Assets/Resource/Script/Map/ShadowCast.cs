@@ -14,7 +14,7 @@ public class ShadowCast
         this.MapManager = mapmanager;
     }
 
-    public void ScanOctant(int Visrange, Vector3 PlayerPosition, Sight_Sort Sight_Sort, TIle_Data[,] MapData, 
+    public void ScanOctant(int Visrange, Vector3 PlayerPosition, Sight_Sort Sight_Sort, Tile[,] MapData, 
         int pDepth, int pOctant, double pStartSlope, double pEndSlope)
     {
         visrange = Visrange;
@@ -26,7 +26,7 @@ public class ShadowCast
     }
 
 
-    private void ScanArround(Sight_Sort Sight_Sort, TIle_Data[,] MapData, int pDepth, int pOctant, double pStartSlope, double pEndSlope)
+    private void ScanArround(Sight_Sort Sight_Sort, Tile[,] MapData, int pDepth, int pOctant, double pStartSlope, double pEndSlope)
     {
 
         int x = 0;                                                                      //x값 초기화

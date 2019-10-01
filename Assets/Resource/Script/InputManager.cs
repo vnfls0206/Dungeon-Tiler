@@ -8,9 +8,10 @@ public class InputManager : MonoBehaviour, IManager
     private GameManager GameManager;
     private PlayerManager PlayerManager;
     private MapManager MapManager;
+    private UIManager UIManager;
     private CameraManager CameraManager;
 
-    private TIle_Data Target;
+    private Tile Target;
     private Vector3 prePos;
     private bool Is_PointerDown;
 
@@ -20,9 +21,10 @@ public class InputManager : MonoBehaviour, IManager
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
         this.GameManager = gamemanager;
-        PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
-        MapManager = GameManager.MapManager;
-        CameraManager = GameManager.CameraManager;
+        this.PlayerManager = GameManager.PlayerManager;  //게임 매니저로 부터 Manager를 받아온다
+        this.MapManager = GameManager.MapManager;
+        this.UIManager = GameManager.UIManager;
+        this.CameraManager = GameManager.CameraManager;
 
         Is_PointerDown = false;
 
@@ -133,16 +135,51 @@ public class InputManager : MonoBehaviour, IManager
 
     private void OnPointerUp()
     {
+        //(마우스 클릭 설계)
+        //1) UI가 활성화 되어있는가
+        // -> UI 클릭만을 받아야 되므로 다른 클릭을 받지않는다.
+
+        //  2) Tile Hight가 활성화 되어 있는가
+        //      2-1) 클릭한것이 Tile인가
+        //      2-2) Tile이라면 HightLight가 활성화 되어있는가
+
+        //  3) Tile Hight가 활성화 되어 잇지 않은가
+        //      3-1) 클릭한것이 Tile 인가
+        //      3-2) Tile이라면 그 시야값은 Black이 아닌것인가?
+
+
+
         Is_PointerDown = false;
 
-        if (Target != null)  //Target 오브젝트가 null이 아닐때
+        if(!UIManager.Is_UI_Active())       //활성화 되어있는 UI가 없을때
         {
-            if (MapManager.Is_Move_Able_Tile(Target.Tile_Sort))  //클릭한 타일이 이동가능 타일일 경우
+            if (Target != null)  //Target 오브젝트가 null이 아닐때
             {
-                if(Target.Sight_Sort != Sight_Sort.Black)
+                if(Target.Sight_Sort != Sight_Sort.Black)   //Target이 검은 시야상태가 아닐때
                 {
-                    StartCoroutine(PlayerManager.Move_To_Dex(Target));
+                    if(!MapManager.Get_HightLight_Active())  // 보통 상태일때
+                    {
+                        if (MapManager.Set_Map_Target(Target))
+                        {
+                            if (MapManager.Is_Move_Able_Tile(Target.Tile_Sort))  //클릭한 타일이 이동가능 타일일 경우
+                            {
+                                StartCoroutine(PlayerManager.Move_To_Dex(Target));
+                            }
+                        }
+                    }
+                    else            //HightLight가 켜져있을때
+                    {
+                        if(MapManager.Is_HighLight_Tile(Target))
+                        {
+                            if (MapManager.Set_Map_Target(Target))
+                            {
+
+                            }
+                        }
+
+                    }
                 }
+
             }
         }
 
