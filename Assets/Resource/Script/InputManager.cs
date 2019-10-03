@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour, IManager
 {
@@ -17,6 +18,9 @@ public class InputManager : MonoBehaviour, IManager
     private Vector3 prePos;
     private bool Is_PointerDown;
 
+    private float dragThresholdCM;
+    private float inchToCm;
+
     Dictionary<KeyCode, Action> First_key_Check_Dictionary;         //입력키와 호출되는 함수들을 저장하자
     Dictionary<KeyCode, Action> Continuous_key_Check_Dictionary;     //(나중에 설정으로 키가 바뀔 수 도 있으니)
 
@@ -30,6 +34,9 @@ public class InputManager : MonoBehaviour, IManager
 
         Is_PointerDown = false;
 
+        dragThresholdCM = 0.5f;
+        inchToCm = 2.54f;
+        EventSystem.current.pixelDragThreshold = (int)(dragThresholdCM * Screen.dpi / inchToCm);
 
         First_key_Check_Dictionary = new Dictionary<KeyCode, Action>     //지속적인 입력을 감지하는 KeyCode들
         {
@@ -98,14 +105,18 @@ public class InputManager : MonoBehaviour, IManager
         if (Is_PointerDown)
         {
             Vector3 nowPos = Input.mousePosition;
-            if(nowPos != prePos)
-            {
-                Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
-               
-                CameraManager.Position = CameraManager.Position + movePos;
-                prePos = Input.mousePosition;
 
-                Target = null;
+            if(!UIManager.Is_UI_Active())
+            {
+                if (nowPos != prePos)
+                {
+                    Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
+
+                    CameraManager.Position = CameraManager.Position + movePos;
+                    prePos = Input.mousePosition;
+
+                    Target = null;
+                }
             }
 
         }

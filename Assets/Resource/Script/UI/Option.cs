@@ -2,20 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Option : MonoBehaviour
+public class Option : MonoBehaviour, UIManager.IUI
 {
-    public bool OptionEnabled;
-    public GameObject option;
+    private UIManager UIManager;
 
-    public void OnActive()
+    [SerializeField] private GameObject Option_Obj;   // 객체
+
+    private bool object_enabled;
+    public bool Object_Enabled
     {
-        OptionEnabled = !OptionEnabled;
+        get
+        {
+            return object_enabled;
+        }
+        set
+        {
+            object_enabled = value;
+            Option_Obj.SetActive(value);
+            if (value)
+            {
+                UIManager.Active_UI = this;
+            }
+        }
+    }
+
+    public void Set_UI(UIManager uimanager)
+    {
+        this.UIManager = uimanager;
+
+        object_enabled = false;
     }
     public void Update_UI()
     {
-        if (OptionEnabled == true)
-            option.SetActive(true);
-        else
-            option.SetActive(false);
+
     }
+
+    public void Set_Activate()
+    {
+        Object_Enabled = !Object_Enabled;
+    }
+
 }

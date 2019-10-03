@@ -18,6 +18,7 @@ public class Stage_Data
     public int Stage_Num;
     public eTile Nomal;
     public eTile Wall;
-    //public eTile Concept_Tile_1;
+    public eTile Concept_Tile_1;
+    public eTile Concept_Tile_2;
 
 }

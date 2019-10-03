@@ -101,7 +101,7 @@ public class MapTarget : MonoBehaviour
             T_Scale -= Time.deltaTime;
         }
 
-        this.transform.localScale = new Vector3(1 + T_Scale, 1 + T_Scale, 1);
+        this.transform.localScale = new Vector3(1.2f + T_Scale, 1.2f + T_Scale, 1);
     }
 
 

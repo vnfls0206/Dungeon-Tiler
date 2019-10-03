@@ -43,6 +43,9 @@ public enum eTile
     NOMAL,
     WALL,
     DOOR,
+    STONE,
+    MOSS_OF_STONE,
+    MMOSS_OF_STONE,
     COUNT
 }
 
@@ -116,7 +119,7 @@ public class MapManager : MonoBehaviour, IManager
         VisibleOctants = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
         Tiles = new Tile_Obj[15, 15];                                     
         MapSize = 64;
-        VisualRange = 8;
+        VisualRange = 5;
         roomMin = 6;
         roomMax = 13;
 
@@ -495,6 +498,9 @@ public class MapManager : MonoBehaviour, IManager
         {
             case eTile.NOMAL:
             case eTile.DOOR:
+            case eTile.MMOSS_OF_STONE:
+            case eTile.MOSS_OF_STONE:
+            case eTile.STONE:
                 {
                     temp = true;
                     break;
@@ -698,7 +704,6 @@ public class MapManager : MonoBehaviour, IManager
     public void HL()
     {
         MapHightLight.Set_Activate(Get_PTile(), 3);
-
     }
 
 }

@@ -6,30 +6,26 @@ using UnityEngine.UI;
 
 
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, UIManager.IUI
 {
     private UIManager UIManager;
 
-    private bool inventoryenabled;
-    public bool InventoryEnabled
+    private bool object_enabled;
+    public bool Object_Enabled
     {
         get
         {
-            return inventoryenabled;
+            return object_enabled;
         }
         set
         {
-            inventoryenabled = value;
-            if(value)
+            object_enabled = value;
+            Inventory_Obj.SetActive(object_enabled);
+            if (object_enabled)
             {
-                inventory.SetActive(true);
-                UIManager.Active_UI_Count++;
+                UIManager.Active_UI = this;
             }
-            else if(!value)
-            {
-                inventory.SetActive(false);
-                UIManager.Active_UI_Count--;
-            }
+
         }
     }
     public SpriteAtlas spriteAtlas;
@@ -39,7 +35,7 @@ public class Inventory : MonoBehaviour
     public List<Item> inventoryList_Tile;      //가지고 있는 타일 리스트
     public List<Item> inventoryList_Etc;       //가지고 있는 기타 아이템 리스트
 
-    public GameObject inventory;                    // slot 부모객체
+    [SerializeField] private GameObject Inventory_Obj;   // 객체
     public Explain_Window Explain_Window;
     public Log log;
 
@@ -48,11 +44,13 @@ public class Inventory : MonoBehaviour
     {
         this.UIManager = uImanager;
 
+        object_enabled = false;
+
         inventoryList_Weapon = new List<Item>();
         inventoryList_Tile = new List<Item>();
         inventoryList_Etc = new List<Item>();
 
-        slots = inventory.transform.GetComponentsInChildren<InventroySlot>();
+        slots = Inventory_Obj.transform.GetComponentsInChildren<InventroySlot>();
 
         AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
         AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),5));
@@ -64,6 +62,11 @@ public class Inventory : MonoBehaviour
         AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),1));
 
         ShowItem(ItemType.Weapon);
+    }
+
+    public void Update_UI()
+    {
+        
     }
 
     public void AddItem(Item _item)
@@ -131,5 +134,10 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < slots.Length; i++)
             slots[i].RemoveItem();
+    }
+
+    public void Set_Activate()
+    {
+        Object_Enabled = !Object_Enabled;
     }
 }

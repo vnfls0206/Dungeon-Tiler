@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage_Data_List:
   - Stage_Num: 1
-    Nomal: 1
+    Nomal: 4
     Wall: 2
+    Concept_Tile_1: 5
+    Concept_Tile_2: 6

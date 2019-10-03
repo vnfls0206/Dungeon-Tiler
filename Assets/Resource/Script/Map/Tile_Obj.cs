@@ -68,30 +68,31 @@ public class Tile_Obj : MonoBehaviour
         if(Active_Tile != null)
             Active_Tile.SetActive(false);
 
-        switch ((int)Tile_Sort)
-        { 
-            case 1:
-            case 3:
-                {
-                    Active_Tile = Nomal_Object;
+        if (Tile_Sort != eTile.NULL)
+        {
+            switch (MapManager.Is_Move_Able_Tile(Tile_Sort))
+            {
+                case true:
+                    {
+                        Active_Tile = Nomal_Object;
 
-                    int Sprite_Num = 0;
-                    rend = Active_Tile.GetComponent<MeshRenderer>();
-                    rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
-                    break;
-                }
+                        int Sprite_Num = (int)Tile_Sort - 1;
+                        rend = Active_Tile.GetComponent<MeshRenderer>();
+                        rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
+                        break;
+                    }
 
-            case 2:
-                {
-                    Active_Tile = Wall_Object;
+                case false:
+                    {
+                        Active_Tile = Wall_Object;
 
-                    int Sprite_Num = 1;
-                    rend = Active_Tile.GetComponent<MeshRenderer>();
-                    rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
-                    break;
-                }
+                        int Sprite_Num = (int)Tile_Sort - 1; ;
+                        rend = Active_Tile.GetComponent<MeshRenderer>();
+                        rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
+                        break;
+                    }
+            }
         }
-
     }
     private void Update_Sight_Sort(Sight_Sort Sight_Sort)
     {

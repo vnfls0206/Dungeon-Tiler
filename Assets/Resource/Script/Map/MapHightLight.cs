@@ -8,7 +8,9 @@ public class MapHightLight : MonoBehaviour
     private Renderer rend;
     private Texture2D tex;
 
-    private List<Tile> HL_LIst;
+    private List<Tile> Set_Able_TIle_LIst;
+    private List<Tile> Gert_Able_Tile_List;
+
     private int Scale;
     private float TF_Scale;
 
@@ -31,7 +33,8 @@ public class MapHightLight : MonoBehaviour
     public void Set_Map(MapManager mapmanager)
     {
         this.MapManager = mapmanager;
-        HL_LIst = new List<Tile>();
+        Set_Able_TIle_LIst = new List<Tile>();
+        Gert_Able_Tile_List = new List<Tile>();
 
         rend = GetComponent<Renderer>();        //할당
         tex = new Texture2D(0, 0);
@@ -67,7 +70,8 @@ public class MapHightLight : MonoBehaviour
             }
 
             Light_Cast(size, new Array_Index(size, size), tile, true);
-            HL_LIst.Remove(tile);
+
+            //HL_LIst.Remove(tile);
 
             int x = -size - 1;
             int y = -size - 1;
@@ -76,7 +80,7 @@ public class MapHightLight : MonoBehaviour
             {
                 for (int j = 0; j < Scale; j++)
                 {
-                    if (HL_LIst.Contains(MapManager.GetTile(tile.x + x, tile.y + y)))
+                    if (Set_Able_TIle_LIst.Contains(MapManager.GetTile(tile.x + x, tile.y + y)))
                     {
                         tex.SetPixel(i, j, new Color(0f, 1f, 0f, 0.6f));
                     }
@@ -95,7 +99,7 @@ public class MapHightLight : MonoBehaviour
         else
         {
             EventManager.TF_Event -= HL_TF_Event;
-            HL_LIst.Clear();
+            Set_Able_TIle_LIst.Clear();
         }
 
     }
@@ -105,9 +109,10 @@ public class MapHightLight : MonoBehaviour
         int tileX = tile.x; // 현재 타일의 가로축 인덱스
         int tileY = tile.y; // 현재 타일의 세로축 인덱스
 
-        if (!HL_LIst.Contains(tile) && isFirst == false)
+        if (!Set_Able_TIle_LIst.Contains(tile) && isFirst == false)
         {
-            HL_LIst.Add(tile);
+            Set_Able_TIle_LIst.Add(tile);
+            //if(move)
             //tex.SetPixel(Index.x, Index.y, new Color(1f, 0f, 0f, 0.5f));
         }
 
@@ -154,7 +159,7 @@ public class MapHightLight : MonoBehaviour
 
     public bool Is_HighLight_Tile(Tile tile)
     {
-        return HL_LIst.Contains(tile);
+        return Set_Able_TIle_LIst.Contains(tile);
     }
 
 }

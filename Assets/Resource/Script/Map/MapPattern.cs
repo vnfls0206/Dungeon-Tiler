@@ -31,6 +31,8 @@ public class MapPattern
         eTile[,] value = null;
         eTile W = MapManager.Get_Stage_Data().Wall;
         eTile O = MapManager.Get_Stage_Data().Nomal;
+        eTile A = MapManager.Get_Stage_Data().Concept_Tile_1;
+        eTile B = MapManager.Get_Stage_Data().Concept_Tile_2;
         eTile N = eTile.NULL;
 
 
@@ -38,7 +40,7 @@ public class MapPattern
         {
             case 606:       //6x6
                 {
-                    int num = Random.Range(0, 1 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -47,9 +49,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
+                                    {W,O,A,O,O,W},
+                                    {W,O,A,A,O,W},
+                                    {W,O,O,O,A,W},
                                     {W,W,W,W,W,W}
                                 };
                                 break;
@@ -59,11 +61,37 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,N,N},
-                                    {W,O,O,W,N,N},
-                                    {W,O,O,W,W,W},
-                                    {W,O,O,O,O,W},
+                                    {W,O,A,W,N,N},
+                                    {W,O,A,W,W,W},
+                                    {W,A,O,O,A,W},
                                     {W,O,O,O,O,W},
                                     {W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,N,N},
+                                    {W,O,A,W,N,N},
+                                    {W,O,A,W,W,W},
+                                    {W,W,O,O,A,W},
+                                    {N,W,W,O,O,W},
+                                    {N,N,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W},
+                                    {W,O,A,O,O,W},
+                                    {W,O,A,O,O,W},
+                                    {W,W,W,O,A,W},
+                                    {N,N,W,O,O,W},
+                                    {N,N,W,W,W,W}
                                 };
                                 break;
                             }
@@ -72,7 +100,7 @@ public class MapPattern
                 }
             case 706:       //7x6
                 {
-                    int num = Random.Range(0, 0 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -80,11 +108,50 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,W},
+                                    {W,O,O,O,O,A,W},
+                                    {W,O,O,A,O,O,W},
+                                    {W,O,A,O,O,O,W},
                                     {W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 1:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {N,N,W,W,W,W,W},
+                                    {N,N,W,O,O,O,W},
+                                    {W,W,W,O,O,A,W},
+                                    {W,O,O,A,O,O,W},
+                                    {W,O,A,O,O,O,W},
+                                    {W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,N,N},
+                                    {W,O,A,O,W,N,N},
+                                    {W,O,O,O,W,N,N},
+                                    {W,O,O,A,W,W,W},
+                                    {W,O,A,O,O,O,W},
+                                    {W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W},
+                                    {W,O,A,O,O,O,W},
+                                    {W,W,W,W,O,A,W},
+                                    {N,N,N,W,O,O,W},
+                                    {N,N,N,W,O,O,W},
+                                    {N,N,N,W,W,W,W}
                                 };
                                 break;
                             }
@@ -93,7 +160,7 @@ public class MapPattern
                 }
             case 806:       //8x6
                 {
-                    int num = Random.Range(0, 0 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -101,11 +168,50 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
+                                    {W,O,O,A,O,A,O,W},
+                                    {W,O,O,O,A,O,O,W},
+                                    {W,O,A,O,O,A,O,W},
+                                    {W,O,O,A,O,O,O,W},
                                     {W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 1:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,N,W,W,W,W},
+                                    {W,O,W,N,W,A,O,W},
+                                    {W,O,W,W,W,O,O,W},
+                                    {W,O,A,O,O,A,O,W},
+                                    {W,O,O,A,O,O,O,W},
+                                    {W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,W},
+                                    {W,O,O,A,O,A,O,W},
+                                    {W,O,O,O,A,O,O,W},
+                                    {W,O,A,W,W,W,O,W},
+                                    {W,O,O,W,N,W,O,W},
+                                    {W,W,W,W,N,W,W,W}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,W},
+                                    {W,O,O,A,O,A,O,W},
+                                    {W,O,O,O,A,O,O,W},
+                                    {W,O,A,W,W,W,W,W},
+                                    {W,O,O,W,N,N,N,N},
+                                    {W,W,W,W,N,N,N,N}
                                 };
                                 break;
                             }
@@ -114,7 +220,7 @@ public class MapPattern
                 }
             case 906:       //9x6
                 {
-                    int num = Random.Range(0, 0 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -123,10 +229,49 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,A,A,O,O,W},
+                                    {W,O,A,O,O,A,O,O,W},
+                                    {W,O,O,O,O,O,A,O,W},
                                     {W,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 1:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,N,N,N},
+                                    {W,O,O,O,O,W,N,N,N},
+                                    {W,O,O,O,A,W,W,W,W},
+                                    {W,O,A,O,O,A,O,O,W},
+                                    {W,O,O,O,O,O,A,O,W},
+                                    {W,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {N,N,W,W,W,W,W,W,W},
+                                    {N,N,W,O,O,O,O,O,W},
+                                    {W,W,W,O,A,A,O,O,W},
+                                    {W,O,A,O,O,A,W,W,W},
+                                    {W,O,O,O,O,O,W,N,N},
+                                    {W,W,W,W,W,W,W,N,N}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,N,N},
+                                    {W,O,O,O,O,O,W,N,N},
+                                    {W,O,O,O,A,A,W,W,W},
+                                    {W,W,W,O,O,A,O,O,W},
+                                    {N,N,W,O,O,O,A,O,W},
+                                    {N,N,W,W,W,W,W,W,W}
                                 };
                                 break;
                             }
@@ -135,7 +280,7 @@ public class MapPattern
                 }
             case 1006:       //10x6
                 {
-                    int num = Random.Range(0, 0 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -143,10 +288,49 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
+                                    {W,O,O,O,A,O,O,O,O,W},
+                                    {W,O,O,O,A,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,W},
+                                    {W,W,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 1:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,W,W,W},
+                                    {W,O,O,O,A,O,O,O,O,W},
+                                    {W,O,O,O,A,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,W,W,W,W,W,W,W,W},
+                                    {W,W,W,N,N,N,N,N,N,N}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {N,N,N,N,N,N,N,W,W,W},
+                                    {W,W,W,W,W,W,W,W,O,W},
+                                    {W,O,O,O,A,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,W},
+                                    {W,W,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,N,W,W,W,W,W},
+                                    {W,O,O,W,N,W,O,O,O,W},
+                                    {W,O,O,W,W,W,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,W},
                                     {W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -156,7 +340,7 @@ public class MapPattern
                 }
             case 1106:       //11x6
                 {
-                    int num = Random.Range(0, 0 + 1);
+                    int num = Random.Range(0, 3 + 1);
                     switch (num)
                     {
                         case 0:
@@ -165,10 +349,49 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 1:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,W,W,W,W},
+                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,W,W,W},
+                                    {W,O,O,O,O,O,O,O,W,N,N},
+                                    {W,O,O,O,O,O,O,A,W,N,N},
+                                    {W,W,W,W,W,W,W,W,W,N,N}
+                                };
+                                break;
+                            }
+                        case 2:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,W,W,W,W},
+                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,O,W},
+                                    {W,W,W,W,O,O,O,O,O,O,W},
+                                    {N,N,N,W,O,O,O,A,O,O,W},
+                                    {N,N,N,W,W,W,W,W,W,W,W}
+                                };
+                                break;
+                            }
+                        case 3:
+                            {
+                                value = new eTile[,]
+                                {
+                                    {W,W,W,W,W,W,W,N,W,W,W},
+                                    {W,O,O,O,O,O,W,W,W,O,W},
+                                    {W,O,A,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,W,W,W,O,A,O,O,W},
+                                    {W,W,W,W,N,W,W,W,W,W,W}
                                 };
                                 break;
                             }
@@ -186,9 +409,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,A,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -206,10 +429,10 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
+                                    {W,O,O,O,A,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,A,O,O,W},
+                                    {W,O,O,A,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -228,9 +451,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,O,O,O,O,W},
+                                    {W,O,O,A,O,O,O,O,O,O,A,O,O,W},
+                                    {W,O,O,O,O,O,O,O,A,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -249,10 +472,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
+                                    {W,O,A,O,O,W},
                                     {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
+                                    {W,A,O,O,A,W},
+                                    {W,O,O,O,A,W},
                                     {W,W,W,W,W,W}
                                 };
                                 break;
@@ -271,9 +494,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
+                                    {W,O,O,O,A,O,W},
+                                    {W,O,A,O,O,O,W},
+                                    {W,O,A,O,O,O,W},
                                     {W,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W}
                                 };
@@ -287,7 +510,7 @@ public class MapPattern
                                     {W,O,O,O,W,N,N},
                                     {W,O,O,O,W,W,W},
                                     {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,W},
                                     {W,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W}
                                 };
@@ -308,8 +531,8 @@ public class MapPattern
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,A,O,W},
+                                    {W,O,A,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W}
                                 };
@@ -320,8 +543,8 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
+                                    {W,A,A,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,W},
                                     {W,O,W,W,W,O,O,W},
                                     {W,O,W,N,W,O,O,W},
                                     {W,O,W,N,W,O,O,W},
@@ -344,9 +567,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,A,O,O,W},
+                                    {W,O,A,O,O,O,O,O,W},
+                                    {W,O,O,A,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W}
                                 };
@@ -357,9 +580,9 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,W,W,W,W,W,O,O,W},
+                                    {W,O,A,O,O,O,O,O,W},
+                                    {W,O,O,O,A,O,A,O,W},
+                                    {W,W,W,W,W,W,O,A,W},
                                     {N,N,N,N,N,W,O,O,W},
                                     {N,N,N,N,N,W,O,O,W},
                                     {N,N,N,N,N,W,W,W,W}
@@ -379,10 +602,10 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,A,O,O,O,O,O,W},
+                                    {W,O,O,A,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,A,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W}
                                 };
@@ -395,9 +618,9 @@ public class MapPattern
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
                                     {W,O,O,W,W,W,W,O,O,W},
-                                    {W,O,O,W,N,N,W,O,O,W},
-                                    {W,O,O,W,W,W,W,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
+                                    {W,A,O,W,N,N,W,O,A,W},
+                                    {W,A,O,W,W,W,W,O,O,W},
+                                    {W,O,O,A,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -415,11 +638,11 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,A,O,O,W},
                                     {W,W,W,W,W,O,O,O,O,O,W},
                                     {N,N,N,N,W,O,O,O,O,O,W},
-                                    {W,W,W,W,W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,W,W,W,W,O,O,A,O,O,W},
+                                    {W,O,O,O,O,O,A,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -439,9 +662,9 @@ public class MapPattern
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,A,A,O,O,O,O,O,W},
+                                    {W,O,O,O,A,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,O,O,A,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -460,9 +683,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,O,A,O,W},
+                                    {W,O,O,O,O,O,A,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,A,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
@@ -474,10 +697,10 @@ public class MapPattern
                                 {
                                     {W,W,W,N,W,W,W,N,W,W,W,W,W},
                                     {W,O,W,N,W,O,W,N,W,O,O,O,W},
-                                    {W,O,W,N,W,O,W,N,W,O,O,O,W},
-                                    {W,O,W,W,W,O,W,W,W,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,W,N,W,O,W,N,W,O,A,O,W},
+                                    {W,O,W,W,W,O,W,W,W,O,A,O,W},
+                                    {W,O,O,O,O,O,A,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,O,A,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
                                 break;
@@ -496,9 +719,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,O,O,A,O,O,O,O,W},
+                                    {W,O,O,A,A,O,O,O,A,A,O,O,O,W},
+                                    {W,O,O,A,A,O,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W}
                                 };
@@ -511,9 +734,9 @@ public class MapPattern
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,W,W,W,W,W,W,W,W,W,O,O,O,W},
-                                    {N,N,N,N,N,N,N,N,N,W,O,O,O,W},
-                                    {N,N,N,N,N,N,N,N,N,W,O,O,O,W},
+                                    {W,W,W,W,W,W,W,W,W,W,O,A,A,W},
+                                    {N,N,N,N,N,N,N,N,N,W,O,A,A,W},
+                                    {N,N,N,N,N,N,N,N,N,W,O,O,A,W},
                                     {N,N,N,N,N,N,N,N,N,W,W,W,W,W}
                                 };
                                 break;
@@ -531,11 +754,11 @@ public class MapPattern
                                 value = new eTile[,]
                                 {
                                     {W,W,W,W,W,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
+                                    {W,O,A,O,O,W},
+                                    {W,A,O,O,O,W},
+                                    {W,O,O,A,O,W},
+                                    {W,O,O,A,O,W},
+                                    {W,O,A,O,O,W},
                                     {W,O,O,O,O,W},
                                     {W,W,W,W,W,W}
                                 };
@@ -547,8 +770,8 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
-                                    {W,O,O,O,O,W},
+                                    {W,O,A,A,O,W},
+                                    {W,A,O,O,O,W},
                                     {W,O,W,W,W,W},
                                     {W,O,W,N,N,N},
                                     {W,O,W,N,N,N},
@@ -570,10 +793,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,W},
+                                    {W,A,O,O,O,O,W},
+                                    {W,O,O,A,O,O,W},
+                                    {W,O,O,A,O,O,W},
+                                    {W,A,O,O,O,O,W},
                                     {W,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W}
                                 };
@@ -593,10 +816,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
+                                    {W,O,O,A,O,O,O,W},
+                                    {W,O,O,O,O,O,A,W},
                                     {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,W},
+                                    {W,O,A,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W}
                                 };
@@ -616,10 +839,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,A,O,W},
+                                    {W,O,O,O,O,O,A,O,W},
+                                    {W,O,O,A,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W}
                                 };
@@ -639,9 +862,9 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,A,O,O,W},
+                                    {W,O,A,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,A,A,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W}
@@ -662,10 +885,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,O,O,O,A,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,A,A,O,O,O,O,O,W},
+                                    {W,O,O,A,A,O,O,O,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W}
                                 };
@@ -685,10 +908,10 @@ public class MapPattern
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,A,O,O,O,O,O,A,O,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
-                                    {W,O,O,O,O,O,O,O,O,O,O,W},
+                                    {W,O,O,A,O,O,O,A,O,O,O,W},
+                                    {W,O,O,O,O,O,O,O,O,A,O,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
                                     {W,W,W,W,W,W,W,W,W,W,W,W}
                                 };

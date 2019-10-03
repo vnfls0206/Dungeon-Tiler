@@ -35,11 +35,10 @@ public class BasePlayer : BaseActor
     int depth; // 던전 깊이
 
     int normal_vision;       //평소 시야
-    int current_vision;       
+    int current_vision;
 
 
 
-    
 
     public int State_maxhp() { return max_HP; }
     public int State_currenthp() { return current_HP; }

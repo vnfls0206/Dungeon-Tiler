@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
 
     private void Set_Managers()
     {
-        EventManager.Set_Manager(this);
+        EventManager.Set_Manager(this);             
+        //이벤트를 먼저 세팅해줄것(이벤트는 초기화가 필요)
         PlayerManager.Set_Manager(this);
         MapManager.Set_Manager(this);
         UIManager.Set_Manager(this);
@@ -56,8 +57,8 @@ public class GameManager : MonoBehaviour
     }
 }
 
-#region Class
-public class Array_Index
+#region Struct
+public struct Array_Index
 {
     public int x, y;
     public Array_Index(int X, int Y)
