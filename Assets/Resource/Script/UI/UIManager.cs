@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour, IManager
 {
     private GameManager GameManager;
+    private ItemManager ItemManager;
 
     [SerializeField] private Inventory Inventory;
     [SerializeField] private Option Option;
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour, IManager
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
         this.GameManager = gamemanager;
+        ItemManager = GameManager.ItemManager;
 
         active_ui = new Stack<IUI>();
 
@@ -56,6 +58,8 @@ public class UIManager : MonoBehaviour, IManager
         }
 
         Inventory.Set_UI(this);
+        Inventory.Set_Item(ItemManager);
+
         Option.Set_UI(this);
 
 
@@ -84,6 +88,8 @@ public class UIManager : MonoBehaviour, IManager
     public void UI_Disabled()
     {
         Active_UI = null;
+
+        
     }
 
     #region UI_Interface

@@ -43,47 +43,41 @@ SpriteAtlas:
     packables:
     - {fileID: 2800000, guid: b05c483f8e124504f8d952fb9c9a3b12, type: 3}
     - {fileID: 2800000, guid: 1f3dcf61d26722f45bf9f020edd0b8b4, type: 3}
-    - {fileID: 2800000, guid: 675cb6411f36989469f42a1a69297d71, type: 3}
-    - {fileID: 2800000, guid: 2f1151f3b40e6524781ab276955c84f7, type: 3}
-    - {fileID: 2800000, guid: 59163ccaf8e9a774b8340eca35f3f78d, type: 3}
-    - {fileID: 2800000, guid: 34168fb545d6ce04cb769914df686e0a, type: 3}
-    - {fileID: 2800000, guid: 371d4e337fe17074db2479c5930c0dbf, type: 3}
-    - {fileID: 2800000, guid: c08fe9ac588ebb84a8585f482865c8ca, type: 3}
-    - {fileID: 2800000, guid: f024bd363932a77478281abf00186900, type: 3}
-    - {fileID: 2800000, guid: 11f3f024aa614454c8b24f3cbb2007f6, type: 3}
-    - {fileID: 2800000, guid: 770fe947d1f97e942855e014cf644307, type: 3}
-    - {fileID: 2800000, guid: 76a41a9860261cb4e8ceda1c039f53dc, type: 3}
-    - {fileID: 2800000, guid: 32e1f804f7b0df04eb563bea2f424c08, type: 3}
-    totalSpriteSurfaceArea: 11544704
+    - {fileID: 2800000, guid: 2521b813e53e0a24c80b7cf93d644611, type: 3}
+    - {fileID: 2800000, guid: 80668caf326b74543bdf70bdaeb20cdf, type: 3}
+    - {fileID: 2800000, guid: 5e95e9289a0782a43b20288106799afa, type: 3}
+    - {fileID: 2800000, guid: 8ff016016bb4b574e8fde43d58eb34da, type: 3}
+    - {fileID: 2800000, guid: 722da224805be604ba08f6fbfebc354f, type: 3}
+    - {fileID: 2800000, guid: ded22b724c7e6214da6df49e97373502, type: 3}
+    - {fileID: 2800000, guid: 6f97568a385e1f9459935548f04056f5, type: 3}
+    - {fileID: 2800000, guid: 2aa844ce275dabc48a66dff9fdc759e7, type: 3}
+    - {fileID: 2800000, guid: 6cf847531c32ecc408ea95bb5dc0f14f, type: 3}
+    totalSpriteSurfaceArea: 36700160
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: 675cb6411f36989469f42a1a69297d71, type: 3}
+  - {fileID: 21300000, guid: 8ff016016bb4b574e8fde43d58eb34da, type: 3}
   - {fileID: 21300000, guid: 1f3dcf61d26722f45bf9f020edd0b8b4, type: 3}
-  - {fileID: 21300000, guid: 371d4e337fe17074db2479c5930c0dbf, type: 3}
-  - {fileID: 21300000, guid: 2f1151f3b40e6524781ab276955c84f7, type: 3}
-  - {fileID: 21300000, guid: 32e1f804f7b0df04eb563bea2f424c08, type: 3}
-  - {fileID: 21300000, guid: 11f3f024aa614454c8b24f3cbb2007f6, type: 3}
-  - {fileID: 21300000, guid: 34168fb545d6ce04cb769914df686e0a, type: 3}
-  - {fileID: 21300000, guid: f024bd363932a77478281abf00186900, type: 3}
-  - {fileID: 21300000, guid: 770fe947d1f97e942855e014cf644307, type: 3}
-  - {fileID: 21300000, guid: 76a41a9860261cb4e8ceda1c039f53dc, type: 3}
-  - {fileID: 21300000, guid: 59163ccaf8e9a774b8340eca35f3f78d, type: 3}
-  - {fileID: 21300000, guid: c08fe9ac588ebb84a8585f482865c8ca, type: 3}
+  - {fileID: 21300000, guid: ded22b724c7e6214da6df49e97373502, type: 3}
+  - {fileID: 21300000, guid: 2521b813e53e0a24c80b7cf93d644611, type: 3}
+  - {fileID: 21300000, guid: 6cf847531c32ecc408ea95bb5dc0f14f, type: 3}
+  - {fileID: 21300000, guid: 722da224805be604ba08f6fbfebc354f, type: 3}
+  - {fileID: 21300000, guid: 5e95e9289a0782a43b20288106799afa, type: 3}
+  - {fileID: 21300000, guid: 6f97568a385e1f9459935548f04056f5, type: 3}
+  - {fileID: 21300000, guid: 2aa844ce275dabc48a66dff9fdc759e7, type: 3}
   - {fileID: 21300000, guid: b05c483f8e124504f8d952fb9c9a3b12, type: 3}
+  - {fileID: 21300000, guid: 80668caf326b74543bdf70bdaeb20cdf, type: 3}
   m_PackedSpriteNamesToIndex:
-  - dirt stones
+  - dirt_stones_leafs_more
   - 2
-  - granit grass
-  - dirt stones eary yellow
-  - sand stones
-  - Ice blue
-  - dirt stones leafs more
+  - lava
+  - dirt-stones-leafs
+  - leafs-dark
+  - Ice-blue
+  - dirt_stones_eary_yellow
   - ice
   - leafs
-  - lava
-  - dirt stones leafs
-  - grey dirt stones
   - 1
+  - dirt-stones-leafs-more
   m_Tag: TileAtlas
   m_IsVariant: 0

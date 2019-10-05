@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public InputManager InputManager;
     public CameraManager CameraManager;
     public EventManager EventManager;
+    public ItemManager ItemManager;
     public EnemyManager EnemyManager;
 
     private GameData gamedata = null;

@@ -9,6 +9,15 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour, UIManager.IUI
 {
     private UIManager UIManager;
+    private ItemManager ItemManager;
+
+    [SerializeField] private GameObject Inventory_Obj;   // 객체
+
+    private InventroySlot[] slots;          //인벤토리 슬롯들
+    private List<Item> inventoryList_Weapon;    //가지고 있는 무기 리스트
+    private List<Item> inventoryList_Tile;      //가지고 있는 타일 리스트
+    private List<Item> inventoryList_Etc;       //가지고 있는 기타 아이템 리스트
+
 
     private bool object_enabled;
     public bool Object_Enabled
@@ -24,18 +33,12 @@ public class Inventory : MonoBehaviour, UIManager.IUI
             if (object_enabled)
             {
                 UIManager.Active_UI = this;
+                ShowItem(ItemType.Tile);
             }
 
         }
     }
-    public SpriteAtlas spriteAtlas;
-    private InventroySlot[] slots;          //인벤토리 슬롯들
 
-    public List<Item> inventoryList_Weapon;    //가지고 있는 무기 리스트
-    public List<Item> inventoryList_Tile;      //가지고 있는 타일 리스트
-    public List<Item> inventoryList_Etc;       //가지고 있는 기타 아이템 리스트
-
-    [SerializeField] private GameObject Inventory_Obj;   // 객체
     public Explain_Window Explain_Window;
     public Log log;
 
@@ -52,16 +55,28 @@ public class Inventory : MonoBehaviour, UIManager.IUI
 
         slots = Inventory_Obj.transform.GetComponentsInChildren<InventroySlot>();
 
-        AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
-        AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),5));
-        AddItem(new Item("Wood_Tile", 0, "나무로 된 타일", ItemType.Tile, spriteAtlas.GetSprite("Wood_Tile")));
-        AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
-        AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),4));
-        AddItem(new Item("Wood_Tile", 0, "나무로 된 타일", ItemType.Tile, spriteAtlas.GetSprite("Wood_Tile")));
-        AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
-        AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 1, 1));
 
-        ShowItem(ItemType.Weapon);
+        //AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
+        //AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),5));
+        //AddItem(new Item("Wood_Tile", 0, "나무로 된 타일", ItemType.Tile, spriteAtlas.GetSprite("Wood_Tile")));
+        //AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
+        //AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),4));
+        //AddItem(new Item("Wood_Tile", 0, "나무로 된 타일", ItemType.Tile, spriteAtlas.GetSprite("Wood_Tile")));
+        //AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
+        //AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),1));
+
+        //ShowItem(ItemType.Weapon);
+    }
+
+    public void Set_Item(ItemManager itemmanager)
+    {
+        this.ItemManager = itemmanager;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].Set_Item(this.ItemManager);
+        }
     }
 
     public void Update_UI()
@@ -71,70 +86,55 @@ public class Inventory : MonoBehaviour, UIManager.IUI
 
     public void AddItem(Item _item)
     {
-        switch(_item.itemType)
+        List<Item> temp = Get_Item_List(_item.Item_Type);
+
+        if (temp.Count < 20)
         {
-            case ItemType.Weapon:
-                if (inventoryList_Weapon.Count < 20)
-                {
-                    inventoryList_Weapon.Add(_item);
-                    ShowItem(ItemType.Weapon);
-                }
-                else
-                    print("웨폰인벤토리 가득참");
-                break;
-            case ItemType.Tile:
-                if (inventoryList_Tile.Count < 20)
-                {
-                    inventoryList_Tile.Add(_item);
-                    ShowItem(ItemType.Tile);
-                }
-                else
-                    print("타일인벤토리 가득참");
-                break;
-            case ItemType.Etc:
-                if (inventoryList_Etc.Count < 20)
-                {
-                    inventoryList_Etc.Add(_item);
-                    ShowItem(ItemType.Etc);
-                }
-                else
-                    print("기타 인벤토리 가득참");
-                break;
+            temp.Add(_item);
+            ShowItem(_item.Item_Type);
         }
+        else
+            print("웨폰인벤토리 가득참");
     }
     public void ShowItem(ItemType itemType)
     {
-        RemoveSlot();
+        List<Item> temp = Get_Item_List(itemType);
 
-        switch (itemType)
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (i < temp.Count)
+            {
+                slots[i].Slot_Item = temp[i];
+            }
+            else
+            {
+                slots[i].Slot_Item = null;
+            }
+        }
+
+
+    }
+
+    private List<Item> Get_Item_List(ItemType itemtype )
+    {
+        List<Item> temp = null;
+
+        switch (itemtype)
         {
             case ItemType.Weapon:
-                for(int i=0; i< inventoryList_Weapon.Count; i++)
-                {
-                    slots[i].Additem(inventoryList_Weapon[i]);
-                }
+                temp = inventoryList_Weapon;
                 break;
-
             case ItemType.Tile:
-                for (int i = 0; i < inventoryList_Tile.Count; i++)
-                {
-                    slots[i].Additem(inventoryList_Tile[i]);
-
-                }
+                temp = inventoryList_Tile;
                 break;
             case ItemType.Etc:
-                for (int i = 0; i < inventoryList_Etc.Count; i++)
-                {
-                    slots[i].Additem(inventoryList_Etc[i]);
-                }
+                temp = inventoryList_Etc;
                 break;
-        }                                  
+        }
+
+        return temp;
     }
-    void RemoveSlot()
-    {
-        for (int i = 0; i < slots.Length; i++)
-            slots[i].RemoveItem();
-    }
+
 
     public void Set_Activate()
     {

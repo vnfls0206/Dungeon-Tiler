@@ -4,51 +4,60 @@ using UnityEngine;
 using UnityEngine.UI;
 public class InventroySlot : MonoBehaviour
 {
-    public int itemPrice;          //가격
-    public int itemCount;          //갯수
-    public string itemName;        //이름    
-    public string itemDesc;        //설명
-    public ItemType itemType;      //타입
-    public Image itemImage;        //이미지
+    private ItemManager ItemManager;
 
-    public Explain_Window explain_Window;
-    public Text Text_itemCount;
+    [SerializeField] private Explain_Window explain_Window;
 
-    public void Additem(Item _item)
+    [SerializeField] private Image Item_Image;
+    [SerializeField] private Text Text_itemCount;
+
+
+    public void Set_Item(ItemManager itemmanager)
     {
-        itemName = _item.itemName;
-        itemPrice = _item.itemPrice;
-        itemDesc = _item.itemDesc;
-        itemType = _item.itemType;
-        itemImage.sprite = _item.itemImage;
-        itemCount = _item.itemCount;
+        this.ItemManager = itemmanager;
+    }
 
-        if(itemType == ItemType.Etc)
+    private Item slot_item;
+    public Item Slot_Item
+    {
+        get
         {
-            if (itemCount > 1)
-                Text_itemCount.text = ""+itemCount;
+            return slot_item;
+        }
+        set
+        {
+            slot_item = value;
+
+            if(value != null)
+            {
+                Item_Image.enabled = true;
+                Item_Image.sprite = ItemManager.Get_Item_Sprite(slot_item);
+
+                Text_itemCount.enabled = true;
+                Text_itemCount.text = "" + slot_item.Item_Count;
+            }
+            else
+            {
+                Item_Image.enabled = false;
+                Text_itemCount.enabled = false;
+            }
+
         }
     }
 
-    public void RemoveItem()
-    {
-        itemName    = null;
-        itemDesc    = null;
-        itemPrice   = 0;
-        itemType    = ItemType.NULL;
-        itemImage.sprite = null;
-        Text_itemCount.text = "";
-    }
 
     public void OnClick()
     {
-        if(itemType != ItemType.NULL)
+        if (Slot_Item != null)
         {
+            Item_Data temp = ItemManager.Get_Item_Data(Slot_Item);
+
+
             explain_Window.OnWindow();
 
-            explain_Window.Item_name.text = itemName;
-            explain_Window.item_desc.text = itemDesc;
-            explain_Window.Explain_image.sprite = itemImage.sprite;
+            explain_Window.Item_name.text = temp.itemName;
+            explain_Window.item_desc.text = temp.itemDesc;
+            //explain_Window.Explain_image.sprite = itemImage.sprite;
         }
     }
 }

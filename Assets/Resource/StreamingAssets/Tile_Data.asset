@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42f2ad5fd9ac84997391c9086d6d8b, type: 3}
   m_Name: Tile_Data
   m_EditorClassIdentifier: 
-  Tile_Data_List: []
+  Tile_Data_List:
+  - itemName: "\uB354\uBBF8"
+    itemDesc: "\uB354\uBBF8 \uD0C0\uC77C"
+    itemPrice: 1
+  - itemName: "\uB178\uB9D0"
+    itemDesc: "\uB178\uB9D0 \uD0C0\uC77C"
+    itemPrice: 1
+  - itemName: "\uBCBD"
+    itemDesc: "\uBCBD \uD0C0\uC77C"
+    itemPrice: 1
