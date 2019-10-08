@@ -7,7 +7,7 @@ public class Scene : MonoBehaviour
 {
     public void Change_MainGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
     public void Change_Menu()
     {

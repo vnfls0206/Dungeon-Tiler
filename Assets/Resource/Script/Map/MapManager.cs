@@ -117,7 +117,7 @@ public class MapManager : MonoBehaviour, IManager
         MapHightLight.Set_Map(this);
 
         VisibleOctants = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
-        Tiles = new Tile_Obj[15, 15];                                     
+        Tiles = new Tile_Obj[64, 64];                                     
         MapSize = 64;
         VisualRange = 5;
         roomMin = 6;
@@ -277,14 +277,6 @@ public class MapManager : MonoBehaviour, IManager
         }
 
 
-
-
-
-
-
-
-
-
         DrawRoom(sx, sy, ex, ey, pattern);
         return true;
     }
@@ -338,7 +330,7 @@ public class MapManager : MonoBehaviour, IManager
             int i = 0;
             int j = 0;
 
-            for (int y = sy; y <= ey; y++)
+            for (int y = ey; y >= sy; y--)
             {
                 for (int x = sx; x <= ex; x++)
                 {
@@ -627,6 +619,42 @@ public class MapManager : MonoBehaviour, IManager
             x++;
         }
     }
+
+
+    public void Update_TT()
+    {
+        for (int i = 0; i < 64; i++)
+        {
+            for (int j = 0; j < 64; j++)
+            {
+                //해당 좌표에 타일이 있는가
+
+                if (MapData[i, j] == null)
+                    SetTile(i, j, eTile.NULL, Sight_Sort.Black);
+
+                MapData[i, j].Sight_Sort = Sight_Sort.White;
+
+                Tiles[i, j].Tile = GetTile(i, j);
+
+
+
+                if (Is_Move_Able_Tile(MapData[i, j].Tile_Sort))
+                {
+                    Tiles[i, j].transform.position = new Vector3(i, j);
+                }
+                else if (!Is_Move_Able_Tile(MapData[i, j].Tile_Sort))
+                {
+                    Tiles[i, j].transform.position = new Vector3(i, j, -0.5f);
+                }
+
+                //Tiles[i, j].Tile_Data = MapData[x, y];
+                //Tile_Objects[x, y] =  (int)MapData[x, y].Tile_Sort 
+
+            }
+
+        }
+    }
+
 
     public void Update_Tiles()
     {
