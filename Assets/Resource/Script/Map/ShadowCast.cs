@@ -47,25 +47,25 @@ public class ShadowCast
 
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)     //대상과의 거리가, Range보다 작을때
                     {
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort)) // 해당좌표가 tile이 아닐때
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort)) // 해당좌표가 tile이 아닐때
                         {
                             if (x - 1 >= 0 &&
-                                MapManager.Is_Move_Able_Tile(MapManager.GetTile(x - 1 , y).Tile_Sort))    //해당좌표가 tile이거나
+                                !MapManager.Is_Block_Object(MapManager.GetTile(x - 1 , y).Tile_Sort))    //해당좌표가 tile이거나
                                 // 대상의 x좌표가 1보다 같거나 커야하고, x-1 좌표는 타일일때 
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, PlayerX, PlayerY, false));
 
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
 
                         }
                         else
                         {                       // 해당 좌표가 tile 일때
 
-                            if (x - 1 >= 0 && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x - 1, y).Tile_Sort))     //옆이 벽이면
+                            if (x - 1 >= 0 && MapManager.Is_Block_Object(MapManager.GetTile(x - 1, y).Tile_Sort))     //옆이 벽이면
                                                                                                                         //..adjust the startslope
                                 pStartSlope = GetSlope(x - 0.5, y - 0.5, PlayerX, PlayerY, false);  //대각선 아래
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
 
@@ -88,21 +88,21 @@ public class ShadowCast
                 {
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (x + 1 < MapManager.MapSize + 1 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x + 1, y).Tile_Sort)))        //해당좌표가 tile이거나 
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x + 1, y).Tile_Sort)))        //해당좌표가 tile이거나 
 
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, PlayerX, PlayerY, false));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
-                            if (x + 1 < MapManager.MapSize + 1 && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x + 1, y).Tile_Sort))
+                            if (x + 1 < MapManager.MapSize + 1 && MapManager.Is_Block_Object(MapManager.GetTile(x + 1, y).Tile_Sort))
                                 pStartSlope = -GetSlope(x + 0.5, y - 0.5, PlayerX, PlayerY, false);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     x--;
@@ -124,20 +124,20 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (y - 1 >= 0 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y - 1).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x, y - 1).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, PlayerX, PlayerY, true));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
-                            if (y - 1 >= 0 && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y - 1).Tile_Sort))
+                            if (y - 1 >= 0 && MapManager.Is_Block_Object(MapManager.GetTile(x, y - 1).Tile_Sort))
                                 pStartSlope = -GetSlope(x + 0.5, y - 0.5, PlayerX, PlayerY, true);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     y++;
@@ -159,21 +159,21 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (y + 1 < MapManager.MapSize + 1 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y + 1).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x, y + 1).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y + 0.5, PlayerX, PlayerY, true));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
                             if (y + 1 < MapManager.MapSize + 1 && 
-                                !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y + 1).Tile_Sort))
+                                MapManager.Is_Block_Object(MapManager.GetTile(x, y + 1).Tile_Sort))
                                 pStartSlope = GetSlope(x + 0.5, y + 0.5, PlayerX, PlayerY, true);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     y--;
@@ -194,21 +194,21 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (x + 1 < MapManager.MapSize + 1 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x + 1, y).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x + 1, y).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, PlayerX, PlayerY, false));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
                             if (x + 1 < MapManager.MapSize + 1
-                                    && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x + 1, y).Tile_Sort))
+                                    && MapManager.Is_Block_Object(MapManager.GetTile(x + 1, y).Tile_Sort))
                                 pStartSlope = GetSlope(x + 0.5, y + 0.5, PlayerX, PlayerY, false);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     x--;
@@ -229,21 +229,21 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (x - 1 >= 0 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x - 1, y).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x - 1, y).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x - 0.5, y - 0.5, PlayerX, PlayerY, false));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
                             if (x - 1 >= 0
-                                    && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x - 1, y).Tile_Sort))
+                                    && MapManager.Is_Block_Object(MapManager.GetTile(x - 1, y).Tile_Sort))
                                 pStartSlope = -GetSlope(x - 0.5, y + 0.5, PlayerX, PlayerY, false);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     x++;
@@ -265,20 +265,20 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (y + 1 < MapManager.MapSize + 1 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y + 1).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x, y + 1).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y + 0.5, PlayerX, PlayerY, true));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                         else
                         {
-                            if (y + 1 < MapManager.MapSize + 1 && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y + 1).Tile_Sort))
+                            if (y + 1 < MapManager.MapSize + 1 && MapManager.Is_Block_Object(MapManager.GetTile(x, y + 1).Tile_Sort))
                                 pStartSlope = -GetSlope(x - 0.5, y + 0.5, PlayerX, PlayerY, true);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     y--;
@@ -300,21 +300,21 @@ public class ShadowCast
                     if (GetVisDistance(x, y, PlayerX, PlayerY) < visrange2)
                     {
 
-                        if (!MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort))
+                        if (MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort))
                         {
                             if (y - 1 >= 0 &&
-                                (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y - 1).Tile_Sort)))
+                                (!MapManager.Is_Block_Object(MapManager.GetTile(x, y - 1).Tile_Sort)))
                                 ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, GetSlope(x + 0.5, y - 0.5, PlayerX, PlayerY, true));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
 
                         }
                         else
                         {
-                            if (y - 1 >= 0 && !MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y - 1).Tile_Sort))
+                            if (y - 1 >= 0 && MapManager.Is_Block_Object(MapManager.GetTile(x, y - 1).Tile_Sort))
                                 pStartSlope = GetSlope(x - 0.5, y - 0.5, PlayerX, PlayerY, true);
 
                             //VisiblePoints.Add(new Point(x, y));
-                            MapData[x, y].Sight_Sort = Sight_Sort;
+                            MapManager.SetTile(x, y, Sight_Sort);
                         }
                     }
                     y++;
@@ -333,9 +333,12 @@ public class ShadowCast
         else if (y >= MapManager.MapSize + 1)
             y = MapManager.MapSize + 1;
 
-        if (pDepth < visrange &
-            (MapManager.Is_Move_Able_Tile(MapManager.GetTile(x, y).Tile_Sort)))
-            ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, pEndSlope);
+        if(MapManager.GetTile(x, y) != null)
+        {
+            if (pDepth < visrange & (!MapManager.Is_Block_Object(MapManager.GetTile(x, y).Tile_Sort)))
+                ScanArround(Sight_Sort, MapData, pDepth + 1, pOctant, pStartSlope, pEndSlope);
+        }
+
 
     }
 

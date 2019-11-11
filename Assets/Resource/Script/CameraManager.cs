@@ -11,11 +11,11 @@ public class CameraManager : MonoBehaviour, IManager
 
     private float dist = 8;       //카메라와의 거리
     private float Height = -3f;   //카메라와의 높이  o일땐 -2
-    private float DampRotate = -7f;  //회전
+    private float DampRotate = -3f;  //회전
 
     public Vector3 Position
     {
-        get
+        get                                             
         {
             return this.transform.position;
         }

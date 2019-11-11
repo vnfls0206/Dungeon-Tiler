@@ -42,7 +42,6 @@ public class Inventory : MonoBehaviour, UIManager.IUI
     public Explain_Window Explain_Window;
     public Log log;
 
-
     public void Set_UI(UIManager uImanager)
     {
         this.UIManager = uImanager;
@@ -55,7 +54,11 @@ public class Inventory : MonoBehaviour, UIManager.IUI
 
         slots = Inventory_Obj.transform.GetComponentsInChildren<InventroySlot>();
 
-        inventoryList_Tile.Add(new Item(ItemType.Tile, 1, 1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 0101, 1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 0100, 1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 0200, 1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 0101, 1));
+        inventoryList_Tile.Add(new Item(ItemType.Tile, 0101, 1));
 
         //AddItem(new Item("Axe", 500, "Good Axe", ItemType.Weapon, spriteAtlas.GetSprite("Axe")));
         //AddItem(new Item("Apple", 50, "Delicious Apple", ItemType.Etc, spriteAtlas.GetSprite("Apple"),5));
@@ -111,11 +114,15 @@ public class Inventory : MonoBehaviour, UIManager.IUI
                 slots[i].Slot_Item = null;
             }
         }
+    }
 
+    public void Remove_Item(ItemType itemType, Item _item, int count)
+    {
+        List<Item> temp = Get_Item_List(_item.Item_Type);
 
     }
 
-    private List<Item> Get_Item_List(ItemType itemtype )
+    public List<Item> Get_Item_List(ItemType itemtype )
     {
         List<Item> temp = null;
 

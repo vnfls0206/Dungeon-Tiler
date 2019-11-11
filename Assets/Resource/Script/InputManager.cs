@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour, IManager
 
     private Tile Target;
     private Vector3 prePos;
+    private float Min_Move_Distance;
     private bool Is_PointerDown;
 
     private float dragThresholdCM;
@@ -34,6 +35,7 @@ public class InputManager : MonoBehaviour, IManager
 
         Is_PointerDown = false;
 
+        Min_Move_Distance = Mathf.Max(Screen.width, Screen.height) / 1000f;
         dragThresholdCM = 0.5f;
         inchToCm = 2.54f;
         EventSystem.current.pixelDragThreshold = (int)(dragThresholdCM * Screen.dpi / inchToCm);
@@ -41,7 +43,7 @@ public class InputManager : MonoBehaviour, IManager
         First_key_Check_Dictionary = new Dictionary<KeyCode, Action>     //지속적인 입력을 감지하는 KeyCode들
         {
             //{ KeyCode.Mouse0, OnPointerDown}
-            //,{ KeyCode.W, () => MapManager.SetTile(1, 2, eTile.WALL, Sight_Sort.Black)}       //참고용을 붙여놓음
+            //,{ KeyCode.W, () => MapManager.SetTile(1, 2, eTileBase.WALL, Sight_Sort.Black)}       //참고용을 붙여놓음
         };      //나중에는 데이터가 있으면 키설정을 불러오고 없으면 이대로 초기화하도록 수정하자
 
     }
@@ -76,11 +78,17 @@ public class InputManager : MonoBehaviour, IManager
             else if (touch.phase == TouchPhase.Moved)
             {
                 Vector3 nowPos = touch.position - touch.deltaPosition;
-                Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
-                CameraManager.Position = CameraManager.Position + movePos;
-                prePos = touch.position - touch.deltaPosition;
+                Vector2 distance = (prePos - nowPos);
 
-                Target = null;
+                if(distance.magnitude > Min_Move_Distance)
+                {
+                    Vector3 movePos = (Vector3)(prePos - nowPos) * 0.05f;
+                    CameraManager.Position = CameraManager.Position + movePos;
+                    prePos = touch.position - touch.deltaPosition;
+
+                    Target = null;
+                }
+
             }
             else if (touch.phase == TouchPhase.Ended)
             {
@@ -142,8 +150,9 @@ public class InputManager : MonoBehaviour, IManager
         if (Target != null)
         {
             //MapManager.Tile_Target(Target);
+            Is_PointerDown = true;
         }
-        Is_PointerDown = true;
+        
     }
 
     private void OnPointerUp()
@@ -170,9 +179,9 @@ public class InputManager : MonoBehaviour, IManager
             {
                 if(Target.Sight_Sort != Sight_Sort.Black)   //Target이 검은 시야상태가 아닐때
                 {
-                    if(!MapManager.Get_HightLight_Active())  // 보통 상태일때
+                    if(!MapManager.Get_Gimmick_Active())  // 보통 상태일때
                     {
-                        if (MapManager.Set_Map_Target(Target))
+                        if (MapManager.In_Map_Target(Target))
                         {
                             if (MapManager.Is_Move_Able_Tile(Target.Tile_Sort))  //클릭한 타일이 이동가능 타일일 경우
                             {
@@ -184,7 +193,7 @@ public class InputManager : MonoBehaviour, IManager
                     {
                         if(MapManager.Is_HighLight_Tile(Target))
                         {
-                            if (MapManager.Set_Map_Target(Target))
+                            if (MapManager.In_Map_Target(Target))
                             {
 
                             }

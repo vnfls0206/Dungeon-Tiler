@@ -24,16 +24,21 @@ public class MapPattern
         this.MapManager = mapManager;
     }
 
-    public eTile[,] Get_Room_Patterns(Room_Size size)
+    public Tile_Sort[,] Get_Room_Patterns(Room_Size size)
     {
         int Size_num = size.Width * 100 + size.Height;
 
-        eTile[,] value = null;
-        eTile W = MapManager.Get_Stage_Data().Wall;
-        eTile O = MapManager.Get_Stage_Data().Nomal;
-        eTile A = MapManager.Get_Stage_Data().Concept_Tile_1;
-        eTile B = MapManager.Get_Stage_Data().Concept_Tile_2;
-        eTile N = eTile.NULL;
+        Tile_Sort[,] value = null;
+        Tile_Sort W = 
+            new Tile_Sort(MapManager.Get_Stage_Data().Nomal, MapManager.Get_Stage_Data().Wall);
+        Tile_Sort O =
+            new Tile_Sort(MapManager.Get_Stage_Data().Nomal, eTileObject.NULL);
+        Tile_Sort A =
+            new Tile_Sort(MapManager.Get_Stage_Data().Concept_Tile_1, eTileObject.NULL);
+        Tile_Sort B =
+            new Tile_Sort(MapManager.Get_Stage_Data().Concept_Tile_2, eTileObject.NULL);
+
+        Tile_Sort N = new Tile_Sort(eTileBase.NULL, eTileObject.NULL);
 
 
         switch (Size_num)
@@ -45,7 +50,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -58,7 +63,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,N},
                                     {W,O,A,W,N,N},
@@ -71,7 +76,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,N},
                                     {W,O,A,W,N,N},
@@ -84,7 +89,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,A,O,O,W},
@@ -105,7 +110,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,A,O,O,O,W},
@@ -118,7 +123,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W},
                                     {N,N,W,O,O,O,W},
@@ -131,7 +136,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N},
                                     {W,O,A,O,W,N,N},
@@ -144,7 +149,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,A,O,O,O,W},
@@ -165,7 +170,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,A,O,A,O,W},
@@ -178,7 +183,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,N,W,W,W,W},
                                     {W,O,W,N,W,A,O,W},
@@ -191,7 +196,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,A,O,A,O,W},
@@ -204,7 +209,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,A,O,A,O,W},
@@ -225,7 +230,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -238,7 +243,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,N,N,N},
                                     {W,O,O,O,O,W,N,N,N},
@@ -251,7 +256,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,W},
@@ -264,7 +269,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,N},
                                     {W,O,O,O,O,O,W,N,N},
@@ -285,7 +290,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,A,O,O,O,O,W},
@@ -298,7 +303,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,A,O,O,O,O,W},
@@ -311,7 +316,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,N,N,N,N,W,W,W},
                                     {W,W,W,W,W,W,W,W,O,W},
@@ -324,7 +329,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,W,W,W,W,W},
                                     {W,O,O,W,N,W,O,O,O,W},
@@ -345,7 +350,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -358,7 +363,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -371,7 +376,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -384,7 +389,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,W,W,W},
                                     {W,O,O,O,O,O,W,W,W,O,W},
@@ -405,7 +410,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -426,7 +431,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,A,O,O,O,O,O,O,O,W},
@@ -439,7 +444,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,A,O,O,O,O,O,O,O,W},
@@ -452,7 +457,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N,N,N,N,N,N,N},
                                     {W,O,O,O,W,N,N,N,N,N,N,N,N},
@@ -465,7 +470,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,A,O,O,O,O,O,O,O,W},
@@ -486,7 +491,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -499,7 +504,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,N,W,W,W,W,W,W,W,W,W,W},
                                     {N,N,N,N,W,O,O,O,O,O,O,O,O,W},
@@ -512,7 +517,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,N,N},
                                     {W,O,O,O,O,O,O,O,O,O,O,W,N,N},
@@ -525,7 +530,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,O,O,O,O,W},
@@ -546,7 +551,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -560,7 +565,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -574,7 +579,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -588,7 +593,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W},
                                     {N,N,W,O,O,W},
@@ -610,7 +615,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -624,7 +629,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N},
                                     {W,O,O,O,W,N,N},
@@ -638,7 +643,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N},
                                     {W,O,O,O,W,N,N},
@@ -652,7 +657,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,N,N},
                                     {N,N,W,O,W,N,N},
@@ -674,7 +679,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -688,7 +693,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,A,A,O,O,O,O,W},
@@ -702,7 +707,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -716,7 +721,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,W},
@@ -738,7 +743,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -752,7 +757,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,A,O,O,O,O,O,W},
@@ -766,7 +771,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N,N,N},
                                     {W,O,O,O,W,N,N,N,N},
@@ -780,7 +785,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,W},
@@ -803,7 +808,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,A,O,O,O,O,O,W},
@@ -817,7 +822,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -839,7 +844,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,A,O,O,W},
@@ -861,7 +866,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -883,7 +888,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -897,7 +902,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,N,W,W,W,N,W,W,W,W,W},
                                     {W,O,W,N,W,O,W,N,W,O,O,O,W},
@@ -919,7 +924,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -933,7 +938,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -955,7 +960,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,A,O,O,W},
@@ -970,7 +975,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -993,7 +998,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1008,7 +1013,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1023,7 +1028,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1038,7 +1043,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,N,N,N,N},
                                     {W,O,W,N,N,N,N},
@@ -1061,7 +1066,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1076,7 +1081,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1091,7 +1096,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1106,7 +1111,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1129,7 +1134,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -1144,7 +1149,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -1159,7 +1164,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,N,W,W,W,W,W},
                                     {N,N,N,N,W,O,O,O,W},
@@ -1174,7 +1179,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -1197,7 +1202,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -1213,7 +1218,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -1229,7 +1234,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,N,N},
                                     {W,O,O,O,O,O,O,W,N,N},
@@ -1245,7 +1250,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,N,N},
                                     {N,N,W,O,O,O,O,W,N,N},
@@ -1269,7 +1274,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -1284,7 +1289,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -1299,7 +1304,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N,N,N,N,N},
                                     {W,O,O,O,W,N,N,N,N,N,N},
@@ -1314,7 +1319,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N,W,W,W,W},
                                     {W,O,O,O,W,N,N,W,O,O,W},
@@ -1337,7 +1342,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -1352,7 +1357,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,O,O,W},
@@ -1367,7 +1372,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,W,W,W,W},
                                     {W,O,O,O,O,O,W,N,W,O,O,W},
@@ -1382,7 +1387,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,N,W,W,W},
                                     {W,O,O,O,O,O,O,W,N,W,O,W},
@@ -1405,7 +1410,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1420,7 +1425,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1435,7 +1440,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W,N,N,N},
                                     {N,N,W,O,O,O,O,O,O,W,N,N,N},
@@ -1450,7 +1455,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1473,7 +1478,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1488,7 +1493,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,N,N,N,W,W,W,W,W,W},
                                     {W,O,O,O,W,W,W,W,W,O,O,O,O,W},
@@ -1503,7 +1508,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1518,7 +1523,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -1543,7 +1548,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -1559,7 +1564,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -1575,7 +1580,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -1591,7 +1596,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W},
                                     {N,N,W,O,O,W},
@@ -1615,7 +1620,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1631,7 +1636,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1647,7 +1652,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1663,7 +1668,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -1687,7 +1692,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1703,7 +1708,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,W},
@@ -1719,7 +1724,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -1735,7 +1740,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,W,O,O,O,O,O,W},
@@ -1759,7 +1764,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -1775,7 +1780,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,N,N},
                                     {N,N,W,O,O,O,W,N,N},
@@ -1791,7 +1796,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,N,N},
                                     {N,N,W,O,O,O,W,N,N},
@@ -1807,7 +1812,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,N,N},
                                     {N,N,W,O,O,O,W,N,N},
@@ -1831,7 +1836,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -1847,7 +1852,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,W},
@@ -1863,7 +1868,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,W},
@@ -1879,7 +1884,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -1903,7 +1908,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -1919,7 +1924,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -1935,7 +1940,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,N,N},
                                     {W,O,O,O,O,O,O,O,W,N,N},
@@ -1951,7 +1956,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,W,W,W,W,W,W},
                                     {W,O,O,W,N,W,O,O,O,O,W},
@@ -1975,7 +1980,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -1991,7 +1996,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2007,7 +2012,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2023,7 +2028,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2047,7 +2052,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2063,7 +2068,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2079,7 +2084,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,N,W,W,W,W,W,W,W,W,W},
                                     {N,N,N,N,W,O,O,O,O,O,O,O,W},
@@ -2095,7 +2100,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2119,7 +2124,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2135,7 +2140,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2151,7 +2156,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W,N,W,O,O,O,O,W},
@@ -2167,7 +2172,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W,N,W,O,O,O,O,W},
@@ -2191,7 +2196,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -2208,7 +2213,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W},
                                     {N,N,W,O,O,W},
@@ -2225,7 +2230,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W},
                                     {N,N,W,O,O,W},
@@ -2242,7 +2247,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -2267,7 +2272,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -2284,7 +2289,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -2301,7 +2306,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -2318,7 +2323,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -2343,7 +2348,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -2360,7 +2365,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,W},
@@ -2377,7 +2382,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -2394,7 +2399,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,N,N,N},
                                     {W,O,O,W,N,N,N,N},
@@ -2419,7 +2424,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -2436,7 +2441,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -2453,7 +2458,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -2470,7 +2475,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,W,W,W,W,W,W},
                                     {N,N,N,W,O,O,O,O,W},
@@ -2495,7 +2500,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -2512,7 +2517,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -2529,7 +2534,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -2546,7 +2551,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,N,N,N,W,W,W,W},
                                     {N,N,N,N,N,N,W,O,O,W},
@@ -2571,7 +2576,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -2588,7 +2593,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,N,N},
                                     {W,O,O,O,O,O,O,O,W,N,N},
@@ -2605,7 +2610,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,N,N},
                                     {N,N,W,O,O,O,O,O,W,N,N},
@@ -2622,7 +2627,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -2647,7 +2652,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2664,7 +2669,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2681,7 +2686,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2698,7 +2703,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -2723,7 +2728,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2740,7 +2745,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2757,7 +2762,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2774,7 +2779,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2799,7 +2804,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -2824,7 +2829,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -2850,7 +2855,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -2876,7 +2881,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -2902,7 +2907,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -2928,7 +2933,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -2954,7 +2959,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -2980,7 +2985,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -3006,7 +3011,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3032,7 +3037,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3058,7 +3063,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -3085,7 +3090,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -3112,7 +3117,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -3139,7 +3144,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -3167,7 +3172,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -3194,7 +3199,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -3221,7 +3226,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -3248,7 +3253,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3267,7 +3272,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3286,7 +3291,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3314,7 +3319,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3333,7 +3338,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3360,7 +3365,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -3380,7 +3385,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -3400,7 +3405,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,N,N,N},
                                     {W,O,W,N,N,N},
@@ -3428,7 +3433,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -3448,7 +3453,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W},
                                     {N,N,W,O,O,O,W},
@@ -3476,7 +3481,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -3496,7 +3501,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,N,N,N},
                                     {W,O,O,W,N,N,N,N},
@@ -3516,7 +3521,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -3544,7 +3549,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -3564,7 +3569,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -3584,7 +3589,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,N,W,W,W,W,W,W},
                                     {N,N,N,W,O,O,O,O,W},
@@ -3613,7 +3618,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -3633,7 +3638,7 @@ public class MapPattern
                             }
                         case 1:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,N,N,N},
                                     {W,O,O,O,O,O,W,N,N,N},
@@ -3653,7 +3658,7 @@ public class MapPattern
                             }
                         case 2:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {N,N,W,W,W,W,W,W,W,W},
                                     {N,N,W,O,O,O,O,O,O,W},
@@ -3673,7 +3678,7 @@ public class MapPattern
                             }
                         case 3:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,N,N,W,W,W,W},
                                     {W,O,O,W,N,N,W,O,O,W},
@@ -3701,7 +3706,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -3729,7 +3734,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -3757,7 +3762,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3785,7 +3790,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -3813,7 +3818,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W},
                                     {W,O,O,O,O,W},
@@ -3842,7 +3847,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,W},
@@ -3871,7 +3876,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,W},
@@ -3900,7 +3905,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,W},
@@ -3930,7 +3935,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,W},
@@ -3959,7 +3964,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,W},
@@ -3988,7 +3993,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,W},
@@ -4017,7 +4022,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,W},
@@ -4046,7 +4051,7 @@ public class MapPattern
                     {
                         case 0:
                             {
-                                value = new eTile[,]
+                                value = new Tile_Sort[,]
                                 {
                                     {W,W,W,W,W,W,W,W,W,W,W,W,W,W},
                                     {W,O,O,O,O,O,O,O,O,O,O,O,O,W},

@@ -13,6 +13,19 @@ public enum ItemType
 }
 
 [System.Serializable]
+public class Tile_No
+{
+    public int Base_No;
+    public int Object_No;
+
+    public Tile_No(int base_no, int object_no)
+    {
+        this.Base_No = base_no;
+        this.Object_No = object_no;
+    }
+}
+
+[System.Serializable]
 public class Item
 {
     public ItemType Item_Type;

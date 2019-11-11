@@ -14,6 +14,10 @@ public class BaseActor : MonoBehaviour
     
     public bool Is_player() { return true; }
     public bool Is_enemy() { return !Is_player(); }
+
+    
+
+
     //public bool Attack()
     //{
     //    if( Hit)

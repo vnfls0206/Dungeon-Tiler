@@ -16,9 +16,9 @@ public class Stage_Data_Object : ScriptableObject
 public class Stage_Data
 {
     public int Stage_Num;
-    public eTile Nomal;
-    public eTile Wall;
-    public eTile Concept_Tile_1;
-    public eTile Concept_Tile_2;
+    public eTileBase Nomal;
+    public eTileObject Wall;
+    public eTileBase Concept_Tile_1;
+    public eTileBase Concept_Tile_2;
 
 }

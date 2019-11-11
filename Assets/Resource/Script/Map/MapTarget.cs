@@ -7,7 +7,7 @@ public class MapTarget : MonoBehaviour
     private MapManager MapManager;
 
     private Tile target_tile;
-    private Tile Target_Tile
+    public Tile Target_Tile
     {
         get
         {
@@ -18,7 +18,7 @@ public class MapTarget : MonoBehaviour
             target_tile = value;
             if(target_tile != null)
             {
-                if(MapManager.Is_Move_Able_Tile(target_tile.Tile_Sort))
+                if(!MapManager.Is_Block_Object(target_tile.Tile_Sort))
                 {
                     this.transform.position = Target_Tile.Tile_Position + new Vector3(0f, 0f, -0.05f);
                 }
@@ -26,10 +26,11 @@ public class MapTarget : MonoBehaviour
                 {
                     this.transform.position = Target_Tile.Tile_Position + new Vector3(0f, 0f, -1.05f);
                 }
-
-                
             }
-            
+            else if(target_tile == null)
+            {
+                this.transform.position = new Vector3(-10, -10);
+            }
         }
     }
 
@@ -59,6 +60,7 @@ public class MapTarget : MonoBehaviour
     }
 
     private float T_Scale; 
+
 
     public void Set_Map(MapManager mapmanager)
     {

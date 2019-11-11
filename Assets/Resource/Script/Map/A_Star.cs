@@ -11,6 +11,7 @@ public class Node       //클래스 Node 선언(이게 List선언할때는 Struc
 }
 
 
+
 public class A_Star
 {
     private MapManager MapManager;

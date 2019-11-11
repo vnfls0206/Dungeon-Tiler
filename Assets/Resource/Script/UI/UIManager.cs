@@ -7,10 +7,14 @@ public class UIManager : MonoBehaviour, IManager
 {
     private GameManager GameManager;
     private ItemManager ItemManager;
+    private MapManager MapManager;
+    private PlayerManager PlayerManager;
 
     [SerializeField] private Inventory Inventory;
     [SerializeField] private Option Option;
     [SerializeField] private GameObject UI_BackGround;
+    [SerializeField] private Modle_Holder Modle_Holder;
+    [SerializeField] private UI_Button UI_Button;
 
     private Stack<IUI> active_ui;
     public IUI Active_UI
@@ -44,7 +48,9 @@ public class UIManager : MonoBehaviour, IManager
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
     {
         this.GameManager = gamemanager;
-        ItemManager = GameManager.ItemManager;
+        this.ItemManager = GameManager.ItemManager;
+        this.MapManager = GameManager.MapManager;
+        this.PlayerManager = GameManager.PlayerManager;
 
         active_ui = new Stack<IUI>();
 
@@ -58,7 +64,13 @@ public class UIManager : MonoBehaviour, IManager
         }
 
         Inventory.Set_UI(this);
-        Inventory.Set_Item(ItemManager);
+        Inventory.Set_Item(this.ItemManager);
+
+        Modle_Holder.Set_Holder(this, this.MapManager);
+
+        UI_Button.Set_UI(this);
+        UI_Button.Set_Map(this.MapManager);
+        UI_Button.Set_Player(this.PlayerManager);
 
         Option.Set_UI(this);
 
@@ -89,7 +101,39 @@ public class UIManager : MonoBehaviour, IManager
     {
         Active_UI = null;
 
-        
+    }
+
+    public Tile_No Get_Tile_No(int Tile_No)
+    {
+        return new Tile_No(Tile_No / 100, Tile_No % 100);
+    }
+
+    public void Active_Model_View(bool Button_Active)
+    {
+        if(Button_Active != Modle_Holder.Render_Camera_Active)
+        {
+            Modle_Holder.Render_Camera_Active = Button_Active;
+        }
+    }
+
+    public void Pre_TIle_Set()
+    {
+        if (MapManager.Get_Map_target() != null)
+        {
+            PlayerManager.Set_Camera_To_Player();
+
+            MapManager.HL_Active();
+
+            Active_Model_View(MapManager.Is_HL_Active());
+        }
+    }
+
+
+    public Tile_Sort Get_Tile_By_Item(Item item)
+    {
+        Tile_No no = Get_Tile_No(item.Item_No);
+
+        return new Tile_Sort((eTileBase)no.Base_No, (eTileObject)no.Object_No);
     }
 
     #region UI_Interface

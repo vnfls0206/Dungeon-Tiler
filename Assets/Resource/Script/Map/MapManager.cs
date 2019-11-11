@@ -8,47 +8,70 @@ public class Tile
 {
     public int x, y;
     public Vector3 Tile_Position;
-    public eTile Tile_Sort;
+    public Tile_Sort Tile_Sort;
     public Sight_Sort Sight_Sort;
+    public BaseActor Tile_Actor;
 
 
-    public Tile(int X, int Y, Vector3 tile_position, eTile Tile_sort, Sight_Sort sight_sort)
+    public Tile(int X, int Y, Vector3 tile_position, Tile_Sort Tile_sort, Sight_Sort sight_sort, BaseActor tile_actor)
     {
         this.x = X;
         this.y = Y;
         this.Tile_Position = tile_position;
         this.Tile_Sort = Tile_sort;
         this.Sight_Sort = sight_sort;
+        this.Tile_Actor = tile_actor;
     }
 }
 
+[System.Serializable]
+public class Tile_Sort
+{
+    public eTileBase TileBase;
+    public eTileObject TileObject;
+
+    public Tile_Sort(eTileBase tilebase, eTileObject tileobject)
+    {
+        this.TileBase = tilebase;
+        this.TileObject = tileobject;
+    }
+
+}
 
 [System.Serializable]
 public class RoomData
 {
     public int Sx, Sy, Ex, Ey;
-    public RoomData(int sx, int sy, int ex, int ey)
+    public List<Tile> None_TileObj_List;
+    public RoomData(int sx, int sy, int ex, int ey, List<Tile> _list)
     {
         this.Sx = sx;
         this.Sy = sy;
         this.Ex = ex;
         this.Ey = ey;
+        this.None_TileObj_List = _list;
     }
 }
 
 [System.Serializable]
-public enum eTile
+public enum eTileBase
 {
     NULL = 0,
     NOMAL,
-    WALL,
-    DOOR,
     STONE,
     MOSS_OF_STONE,
     MMOSS_OF_STONE,
     COUNT
 }
 
+[System.Serializable]
+public enum eTileObject
+{
+    NULL = 0,
+    WALL,
+    DOOR,
+
+}
 public enum Sight_Sort                 //시야값
 {
     Black = 0,
@@ -77,14 +100,16 @@ public class MapManager : MonoBehaviour, IManager
     [Header("Component")]
     [SerializeField] private MapHightLight MapHightLight;
     [SerializeField] private MapTarget MapTarget;
+    [SerializeField] private Tile_Event Tile_Event;
     private A_Star A_Star;
     private ShadowCast ShadowCast;
     private MapPattern MapPattern;
 
     [Header("Object")]
     [SerializeField] private GameObject Tile_Objs;
-    [SerializeField] private SpriteAtlas Tile_SpriteAtlas;
-    [SerializeField] private List<Texture2D> Tile_Textures;
+    [SerializeField] private SpriteAtlas TileBase_SpriteAtlas;
+    [SerializeField] private List<Texture2D> TileBase_Textures;
+    [SerializeField] private List<Material> TileObject_Textures;
 
     [Header("ScriptableObject")]
     [SerializeField] private Stage_Data_Object Stage_Data;
@@ -96,6 +121,7 @@ public class MapManager : MonoBehaviour, IManager
     private int Current_Stage { get; set; }
     public int MapSize { get; set; }
     private int VisualRange { get; set; }
+    private int Pooling_Count { get; set; }
 
     private int roomMin;
     private int roomMax;
@@ -103,6 +129,7 @@ public class MapManager : MonoBehaviour, IManager
     private List<int> VisibleOctants;   //8방위 List
     private Tile_Obj[,] Tiles;              //오브젝트 풀링 Tile들
     private List<RoomData> RoomData_List;       //RoomData 저장 List
+    private List<GameObject> Map_Gimmick_List;
 
 
     public void Set_Manager(GameManager gamemanager)  //Awake에 해당한다. 시작시 호출
@@ -115,9 +142,12 @@ public class MapManager : MonoBehaviour, IManager
         A_Star = new A_Star(this);       //A*알고리즘
         MapPattern = new MapPattern(this);   //맵 패턴 함수
         MapHightLight.Set_Map(this);
+        Tile_Event.Set_Map(this);
 
         VisibleOctants = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8 };
-        Tiles = new Tile_Obj[64, 64];                                     
+        Map_Gimmick_List = new List<GameObject>();
+        Pooling_Count = 15;
+        Tiles = new Tile_Obj[Pooling_Count, Pooling_Count];                                     
         MapSize = 64;
         VisualRange = 5;
         roomMin = 6;
@@ -136,18 +166,34 @@ public class MapManager : MonoBehaviour, IManager
             BuildMap();                     //맵 정보 생성
         }
 
-        for (int i = 0; i < 15; i++)                //풀링 Object 할당
+        for (int i = 0; i < Pooling_Count; i++)                //풀링 Object 할당
         {
-            for (int j = 0; j < 15; j++)
+            for (int j = 0; j < Pooling_Count; j++)
             {
                 Tiles[i, j] = Tile_Objs.transform.GetChild(Get_Array_Count(i, j)).GetComponent<Tile_Obj>();
                 Tiles[i, j].Set_Tile(this, new Array_Index(i, j));
             }
             
         }
+
+        //while(GetTile(6, 6).Tile_Sort.TileBase == eTileBase.NULL ||
+        //    GetTile(57, 57).Tile_Sort.TileBase == eTileBase.NULL ||
+        //    GetTile(6, 6).Tile_Sort.TileObject == eTileObject.WALL ||
+        //    GetTile(57, 57).Tile_Sort.TileObject == eTileObject.WALL)
+        //{
+        //    MapData = new Tile[MapSize + 1, MapSize + 1];
+
+
+        //    BuildMap();
+        //}
+
+
+
+        //Update_TT();
         Update_Sight();
         Update_Tiles();                   //맵 정보를 기반으로 Tile 업데이트
         MapTarget.Set_Map(this);
+        //link();
     }
 
     private Vector3 pre_C_postion;
@@ -168,10 +214,16 @@ public class MapManager : MonoBehaviour, IManager
         BuildRoom(x, y, GetRandomDirection());
 
         int StartRoom_Num = Random.Range(0, RoomData_List.Count);
+        //플레이어가 시작할 방을 산출한다.
 
-        PlayerManager.SetPosition(new Vector3
-            (Random.Range(RoomData_List[StartRoom_Num].Sx, RoomData_List[StartRoom_Num].Ex),
-             Random.Range(RoomData_List[StartRoom_Num].Sy, RoomData_List[StartRoom_Num].Ey)));
+        Tile Player_Start_Tile = RoomData_List[StartRoom_Num].None_TileObj_List
+            [Random.Range(0, RoomData_List[StartRoom_Num].None_TileObj_List.Count)];
+        //방에서 플레이어의 시작위치를 구한다.
+
+        RoomData_List[StartRoom_Num].None_TileObj_List.Remove(Player_Start_Tile);
+
+       
+        PlayerManager.SetPosition(new Vector3(Player_Start_Tile.x, Player_Start_Tile.y));
 
         Set_Map_Pattern(StartRoom_Num);
    }
@@ -254,23 +306,24 @@ public class MapManager : MonoBehaviour, IManager
             return false;
         }
 
-        eTile[,] pattern =
+        Tile_Sort[,] pattern =
              MapPattern.Get_Room_Patterns(new Room_Size(width + 1, height + 1));
 
-        if(is_width)
+        if(is_width)        //가로        
         {
-            if ((pattern[y - sy , x - sx - 1] != Get_Stage_Data().Wall ||
-                pattern[y - sy , x - sx + 1] != Get_Stage_Data().Wall ||
-                pattern[dy - sy, dx - sx] == Get_Stage_Data().Wall))
-            {
+            if ((pattern[y - sy , x - sx - 1].TileObject != Get_Stage_Data().Wall ||
+                pattern[y - sy , x - sx + 1].TileObject != Get_Stage_Data().Wall ||
+                pattern[dy - sy, dx - sx].TileObject == Get_Stage_Data().Wall))
+            {//이차원배열의 상하 반전 문제로 제대로 작동안함
+
                 pattern = null;
             }
         }
-        else if(!is_width)
+        else if(!is_width)      //세로
         {
-            if ((pattern[y - sy - 1, x - sx] != Get_Stage_Data().Wall ||
-                 pattern[y - sy + 1, x - sx] != Get_Stage_Data().Wall ||
-                 pattern[dy - sy, dx - sx] == Get_Stage_Data().Wall))
+            if ((pattern[y - sy - 1, x - sx].TileObject != Get_Stage_Data().Wall ||
+                 pattern[y - sy + 1, x - sx].TileObject != Get_Stage_Data().Wall ||
+                 pattern[dy - sy, dx - sx].TileObject == Get_Stage_Data().Wall))
             {
                 pattern = null;
             }
@@ -284,48 +337,52 @@ public class MapManager : MonoBehaviour, IManager
     void ExpandRoom(int sx, int sy, int ex, int ey)
     {
         int upDoorX = Random.Range(sx + 1, ex);
-        if (GetTile(upDoorX, ey).Tile_Sort == Get_Stage_Data().Wall)
+        if (GetTile(upDoorX, ey).Tile_Sort.TileObject == Get_Stage_Data().Wall)
         {
             if (BuildRoom(upDoorX, ey, eDirection.Up) == true)
             {
-                SetTile(upDoorX, ey, eTile.DOOR, Sight_Sort.Black);
+                SetTile(upDoorX, ey, 
+                    new Tile_Sort(Get_Stage_Data().Nomal ,eTileObject.DOOR));
             }
         }
 
         int downDoorX = Random.Range(sx + 1, ex);
-        if (GetTile(downDoorX, sy).Tile_Sort == Get_Stage_Data().Wall)
+        if (GetTile(downDoorX, sy).Tile_Sort.TileObject == Get_Stage_Data().Wall)
         {
             if (BuildRoom(downDoorX, sy, eDirection.Down) == true)
             {
-                SetTile(downDoorX, sy, eTile.DOOR, Sight_Sort.Black);
+                SetTile(downDoorX, sy, 
+                    new Tile_Sort(Get_Stage_Data().Nomal, eTileObject.DOOR));
             }
         }
 
         int leftDoorY = Random.Range(sy + 1, ey);
-        if (GetTile(sx, leftDoorY).Tile_Sort == Get_Stage_Data().Wall)
+        if (GetTile(sx, leftDoorY).Tile_Sort.TileObject == Get_Stage_Data().Wall)
         {
             if (BuildRoom(sx, leftDoorY, eDirection.Left) == true)
             {
-                SetTile(sx, leftDoorY, eTile.DOOR, Sight_Sort.Black);
+                SetTile(sx, leftDoorY, 
+                    new Tile_Sort(Get_Stage_Data().Nomal, eTileObject.DOOR));
             }
         }
 
         int rightDoorY = Random.Range(sy + 1, ey);
-        if (GetTile(ex, rightDoorY).Tile_Sort == Get_Stage_Data().Wall)
+        if (GetTile(ex, rightDoorY).Tile_Sort.TileObject == Get_Stage_Data().Wall)
         {
             if (BuildRoom(ex, rightDoorY, eDirection.Right) == true)
             {
-                SetTile(ex, rightDoorY, eTile.DOOR, Sight_Sort.Black);
+                SetTile(ex, rightDoorY,
+                    new Tile_Sort(Get_Stage_Data().Nomal, eTileObject.DOOR));
             }
         }
     }
 
-    void DrawRoom(int sx, int sy, int ex, int ey, eTile[,] pattern)
+    void DrawRoom(int sx, int sy, int ex, int ey, Tile_Sort[,] pattern)
     {
-        RoomData_List.Add(new RoomData(sx + 1, sy + 1, ex - 1, ey - 1));
+        RoomData_List.Add(new RoomData(sx + 1, sy + 1, ex - 1, ey - 1, new List<Tile>()));
+        int List_Num = RoomData_List.Count - 1;
 
-
-        if(pattern != null)     //맵패턴의 해당지점에 문이 있을경우
+        if (pattern != null)     //맵패턴의 해당지점에 문이 있을경우
         {
             int i = 0;
             int j = 0;
@@ -334,15 +391,22 @@ public class MapManager : MonoBehaviour, IManager
             {
                 for (int x = sx; x <= ex; x++)
                 {
-                    if (pattern[i, j] == Get_Stage_Data().Wall)
+                    if (pattern[i, j].TileObject == Get_Stage_Data().Wall)
                     {
                         FillWall(x, y);
                     }
                     else
                     {
-                        if(GetTile(x, y).Tile_Sort == eTile.NULL)
+                        if(GetTile(x, y).Tile_Sort.TileObject == eTileObject.NULL)
                         {
-                            SetTile(x, y, pattern[i, j], Sight_Sort.Black);
+                            SetTile(x, y, pattern[i, j]);
+
+                            if(GetTile(x, y).Tile_Sort.TileBase != eTileBase.NULL)
+                            {
+                                RoomData_List[List_Num].None_TileObj_List.Add(GetTile(x, y));
+                                //Tile_Obj가 NULL인 타일들을 List에 넣어준다
+                            }
+
                         }
                     }
                     j++;
@@ -369,7 +433,11 @@ public class MapManager : MonoBehaviour, IManager
             {
                 for (int x = sx + 1; x <= ex - 1; x++)
                 {
-                    SetTile(x, y, Get_Stage_Data().Nomal, Sight_Sort.Black);
+                    SetTile(x, y,
+                        new Tile_Sort(Get_Stage_Data().Nomal, eTileObject.NULL));
+
+                    RoomData_List[List_Num].None_TileObj_List.Add(GetTile(x, y));
+                    //Tile_Obj가 NULL인 타일들을 List에 넣어준다
                 }
             }              
         }
@@ -380,9 +448,10 @@ public class MapManager : MonoBehaviour, IManager
 
     void FillWall(int x, int y)
     {
-        if (GetTile(x, y).Tile_Sort == eTile.NULL)
+        if (GetTile(x, y).Tile_Sort.TileObject == eTileObject.NULL)
         {
-            SetTile(x, y, Get_Stage_Data().Wall, Sight_Sort.Black);
+            SetTile(x, y,
+                new Tile_Sort(Get_Stage_Data().Nomal, Get_Stage_Data().Wall));
         }
     }
 
@@ -397,7 +466,7 @@ public class MapManager : MonoBehaviour, IManager
         {
             for (int x = sx + 1; x <= ex - 1; x++)
             {
-                if (GetTile(x, y).Tile_Sort != eTile.NULL)
+                if (GetTile(x, y).Tile_Sort.TileBase != eTileBase.NULL)
                 {
                     return false;
                 }
@@ -409,8 +478,8 @@ public class MapManager : MonoBehaviour, IManager
 
     private void Set_Map_Pattern(int Start_Room_num)
     {
-        eTile Wall = Get_Stage_Data().Wall;
-        eTile Nomal = Get_Stage_Data().Nomal;
+        eTileObject Wall = Get_Stage_Data().Wall;
+        eTileBase Nomal = Get_Stage_Data().Nomal;
 
 
 
@@ -419,11 +488,12 @@ public class MapManager : MonoBehaviour, IManager
 
 
     #region Map_Functions
-    public void SetTile(int x, int y, eTile Tile_sort, Sight_Sort sight_sort)
+    public void SetTile(int x, int y, Tile_Sort Tile_sort)
     {
         if (MapData[x, y] == null)
         {
-            MapData[x, y] = new Tile(x, y, new Vector3(x, y), Tile_sort, sight_sort);
+            MapData[x, y] = 
+                new Tile(x, y, new Vector3(x, y), Tile_sort, Sight_Sort.Black, null);
         }
         else
         {
@@ -431,18 +501,27 @@ public class MapManager : MonoBehaviour, IManager
         }
     }
 
+    public void SetTile(int x, int y, Sight_Sort sight_sort)
+    {
+        MapData[x, y].Sight_Sort = sight_sort;
+    }
+
+    public void SetTile(int x, int y, BaseActor tile_actor)
+    {
+        MapData[x, y].Tile_Actor = tile_actor;
+    }
+
     public Tile GetTile(int x, int y)
     {
         if (Is_Map_Tile(x, y))       //해당 좌표에 타일이 있는가
         {
             if (MapData[x, y] == null)
-                SetTile(x, y, eTile.NULL, Sight_Sort.Black);
+                SetTile(x, y, new Tile_Sort(eTileBase.NULL, eTileObject.NULL));
 
             return MapData[x, y];
         }
         else                            //x, y 가 범위 밖이라면 null값을 리턴
             return null;
-
     }
 
     public Tile Get_Tile_By_Vector3(Vector3 Position)
@@ -451,14 +530,21 @@ public class MapManager : MonoBehaviour, IManager
             Position.x >= 0 && Position.y <= MapSize)       //해당 좌표에 타일이 있는가
         {
             if (MapData[(int)Position.x, (int)Position.y] == null)
-                SetTile((int)Position.x, (int)Position.y, eTile.NULL, Sight_Sort.Black);
+                SetTile((int)Position.x, (int)Position.y,
+                    new Tile_Sort(eTileBase.NULL, eTileObject.NULL));
 
             return MapData[(int)Position.x, (int)Position.y];
         }
         else                            //x, y 가 범위 밖이라면 null값을 리턴
             return null;
-
     }
+
+    public Sight_Sort Get_Sight_Sort(int x, int y)
+    {
+        return MapData[x, y].Sight_Sort;
+    }
+
+
 
     public bool Is_Map_Tile(int x, int y)
     {
@@ -474,7 +560,7 @@ public class MapManager : MonoBehaviour, IManager
 
     private int Get_Array_Count(int x, int y)
     {
-        return ((x * 15 + y));
+        return ((x * Pooling_Count + y));
     }
 
     public Stage_Data Get_Stage_Data()
@@ -482,35 +568,20 @@ public class MapManager : MonoBehaviour, IManager
         return Stage_Data.stage_Data_List[Current_Stage - 1];
     }
 
-    public bool Is_Move_Able_Tile(eTile Sort)
+    public bool Is_Move_Able_Tile(Tile_Sort Sort)
     {
-        bool temp = true;
-
-        switch (Sort)
-        {
-            case eTile.NOMAL:
-            case eTile.DOOR:
-            case eTile.MMOSS_OF_STONE:
-            case eTile.MOSS_OF_STONE:
-            case eTile.STONE:
-                {
-                    temp = true;
-                    break;
-                }
-            case eTile.WALL:
-            case eTile.NULL:
-                {
-                    temp = false;
-                    break;
-                }
-
-        }
-        return temp;
+        return (Sort.TileObject == eTileObject.NULL || Sort.TileObject == eTileObject.DOOR);
     }
 
-    public Texture2D Get_Tile_From_Atlas(int Sprite_Num)
+
+    public Texture2D Get_TileBase_From_List(int Sprite_Num)
     {
-        return Tile_Textures[Sprite_Num];
+        return TileBase_Textures[Sprite_Num];
+    }
+
+    public Material Get_TileObject_From_List(int Sprite_Num)
+    {
+        return TileObject_Textures[Sprite_Num];
     }
 
     public Tile_Obj Get_TileObj(int x, int y)
@@ -524,23 +595,52 @@ public class MapManager : MonoBehaviour, IManager
     }
 
 
+
+
+
     #endregion
 
     #region Target
 
-    public bool Set_Map_Target(Tile tile)
+    public bool In_Map_Target(Tile tile)
     {
         return MapTarget.Is_In_Target(tile);
 
+    }
+
+    public void Set_Map_Taget(Tile tile)
+    {
+        MapTarget.Target_Tile = tile;
+    }
+
+    public Tile Get_Map_target()
+    {
+        return MapTarget.Target_Tile;
+    }
+
+    public Tile_Obj Get_TileObj_By_Tile(Tile tile)
+    {
+        for(int i = 0; i < 15; i++)
+        {
+            for (int j = 0; j < 15; j++)
+            {
+                if (tile == Tiles[i, j].Tile)
+                {
+                    return Tiles[i, j];
+                }
+            }
+        }
+
+        return null;
     }
 
     #endregion
 
     #region HighLight
 
-    public bool Get_HightLight_Active()
+    public bool Get_Gimmick_Active()
     {
-        return MapHightLight.HL_Active;
+        return (Map_Gimmick_List.Count != 0);
     }
 
     public bool Is_HighLight_Tile(Tile tile)
@@ -581,7 +681,7 @@ public class MapManager : MonoBehaviour, IManager
         Update_Tiles();
     }
 
-    public void Update_Tiles_In_Move()
+    public void Update_Tiles_By_Player()
     {
         Vector3 Player_position = PlayerManager.GetPosition();
 
@@ -596,19 +696,11 @@ public class MapManager : MonoBehaviour, IManager
                 if (Is_Map_Tile(x, y))       //해당 좌표에 타일이 있는가
                 {
                     if (MapData[x, y] == null)
-                        SetTile(x, y, eTile.NULL, Sight_Sort.Black);
+                        SetTile(x, y, new Tile_Sort(eTileBase.NULL, eTileObject.NULL));
 
 
                     Tiles[i, j].Tile = GetTile(x, y);
 
-                    if (Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
-                    {
-                        Tiles[i, j].transform.position = new Vector3(x, y);
-                    }
-                    else if (!Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
-                    {
-                        Tiles[i, j].transform.position = new Vector3(x, y, -0.5f);
-                    }
 
                     //Tiles[i, j].Tile_Data = MapData[x, y];
                     //Tile_Objects[x, y] =  (int)MapData[x, y].Tile_Sort 
@@ -630,7 +722,7 @@ public class MapManager : MonoBehaviour, IManager
                 //해당 좌표에 타일이 있는가
 
                 if (MapData[i, j] == null)
-                    SetTile(i, j, eTile.NULL, Sight_Sort.Black);
+                    SetTile(i, j, new Tile_Sort(eTileBase.NULL, eTileObject.NULL));
 
                 MapData[i, j].Sight_Sort = Sight_Sort.White;
 
@@ -671,19 +763,11 @@ public class MapManager : MonoBehaviour, IManager
                 if(Is_Map_Tile(x, y))       //해당 좌표에 타일이 있는가
                 {
                     if (MapData[x, y] == null)
-                        SetTile(x, y, eTile.NULL, Sight_Sort.Black);
+                        SetTile(x, y, new Tile_Sort(eTileBase.NULL, eTileObject.NULL));
 
 
                     Tiles[i, j].Tile = GetTile(x, y);
 
-                    if(Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
-                    {
-                        Tiles[i, j].transform.position = new Vector3(x, y);
-                    }
-                    else if(!Is_Move_Able_Tile(MapData[x, y].Tile_Sort))
-                    {
-                        Tiles[i, j].transform.position = new Vector3(x, y, -0.5f);
-                    }
 
                     //Tiles[i, j].Tile_Data = MapData[x, y];
                     //Tile_Objects[x, y] =  (int)MapData[x, y].Tile_Sort 
@@ -718,20 +802,106 @@ public class MapManager : MonoBehaviour, IManager
             }
         }
 
-
         return null;
     }
 
 
-    
     public List<Tile> A_Star_PathFinding(Tile Start_Position, Tile Dex_Position)
     {
         return A_Star.A_star(Start_Position, Dex_Position, MapData);
     }
 
-    public void HL()
+    public void HL_Active()
     {
-        MapHightLight.Set_Activate(Get_PTile(), 3);
+        StartCoroutine(MapHightLight.Set_Activate(Get_PTile(), 3));
     }
 
+    public bool Is_HL_Active()
+    {
+        return MapHightLight.HL_Active;
+    }
+
+    public bool Is_Block_Object(Tile_Sort tile_Sort)
+    {
+        bool temp = false;
+
+        switch(tile_Sort.TileObject)
+        {
+            case eTileObject.WALL:
+            case eTileObject.DOOR:
+            {
+
+                    temp = true;
+                    break;
+            }
+        }
+        return temp;
+    }
+
+    public List<GameObject> Get_Gimmick_List()
+    {
+        return Map_Gimmick_List;
+    }
+
+    private void link()
+    {
+
+        List<Tile> tiles = A_Star.A_star(GetTile(6, 6),
+                                         GetTile(57, 57),
+                                         MapData);
+        foreach (Tile i in tiles)
+        {
+            Tiles[i.x, i.y].get_rend().material.color = Color.red;
+        }
+
+
+    }
+
+    public void Set_Tile(Tile_Obj tile_obj, Tile_Sort tile_sort)
+    {
+        SetTile(tile_obj.Tile.x, tile_obj.Tile.y, tile_sort);
+        //tile_obj.tile_Sort = tile_sort;
+        StartCoroutine(Build_Anim(tile_obj.gameObject));
+        Ready_To_Update_Sight();
+        Update_Sight();
+
+        //Set_Map_Taget(Get_Map_target());
+    }
+
+
+    private IEnumerator Build_Anim(GameObject obj)
+    {
+        float size = 0.6f;
+        obj.transform.localScale = new Vector3(size, size, size);
+
+        while (size < 1f)
+        {
+            size += 0.05f;
+            obj.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+
+        yield return null;
+
+    }
+
+    #region TIle_Event
+
+    public IEnumerator Step_Beggin_Event(BaseActor actor,Tile tile)
+    {
+        yield return Tile_Event.Step_Beggin_Event_By_Obj(actor, tile);
+    }
+
+    public IEnumerator Step_On_Event(BaseActor actor, Tile tile)
+    {
+        tile.Tile_Actor = actor;
+        yield return Tile_Event.Step_on_Event_By_Obj(actor, tile);
+    }
+
+    public IEnumerator Step_End_Event(BaseActor actor, Tile tile)
+    {
+        tile.Tile_Actor = null;
+        yield return Tile_Event.Step_End_Event_By_Obj(actor ,tile);
+    }
+    #endregion
 }

@@ -19,16 +19,6 @@ public class Tile_Obj : MonoBehaviour
         //this.Nomal_Object.gameObject.transform.localScale = new Vector3(0.95f, 0.95f, 1f);
     }
 
-    private GameObject active_tile;
-    private GameObject Active_Tile
-    {
-        get {   return active_tile;  }
-        set
-        {
-            active_tile = value;
-            active_tile.SetActive(true);
-        }
-    }
 
     private Tile tile;
     public Tile Tile
@@ -41,12 +31,12 @@ public class Tile_Obj : MonoBehaviour
             Update_Sight_Sort(tile.Sight_Sort);
         }
     }
-    public eTile Tile_Sort
+    public Tile_Sort tile_Sort
     {
         get { return Tile.Tile_Sort; }
         set
         {
-            Tile.Tile_Sort = value;
+            tile.Tile_Sort = value;
             Update_Tile_Sort(value);
         }
     }
@@ -56,47 +46,67 @@ public class Tile_Obj : MonoBehaviour
         get { return Tile.Sight_Sort; }
         set
         {
-            Tile.Sight_Sort = value;
+            tile.Sight_Sort = value;
             Update_Sight_Sort(value);
         }
     }
 
 
 
-    private void Update_Tile_Sort(eTile Tile_Sort)
+    private void Update_Tile_Sort(Tile_Sort Tile_Sort)
     {
-        if(Active_Tile != null)
-            Active_Tile.SetActive(false);
+        Nomal_Object.SetActive(false);
+        Wall_Object.SetActive(false);
 
-        if (Tile_Sort != eTile.NULL)
+        int z_axis = 0;
+
+        if (Tile_Sort.TileBase != eTileBase.NULL)   //Base가 비어있지 않을때
         {
-            switch (MapManager.Is_Move_Able_Tile(Tile_Sort))
+            if (MapManager.Is_Block_Object(Tile_Sort))   //벽오브젝트가 있으면
             {
-                case true:
-                    {
-                        Active_Tile = Nomal_Object;
+                Wall_Object.SetActive(true);
 
-                        int Sprite_Num = (int)Tile_Sort - 1;
-                        rend = Active_Tile.GetComponent<MeshRenderer>();
-                        rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
-                        break;
-                    }
+                int Sprite_Num = (int)Tile_Sort.TileObject - 1;
 
-                case false:
-                    {
-                        Active_Tile = Wall_Object;
+                rend = Wall_Object.GetComponent<MeshRenderer>();
+                rend.material = MapManager.Get_TileObject_From_List(Sprite_Num);
 
-                        int Sprite_Num = (int)Tile_Sort - 1; ;
-                        rend = Active_Tile.GetComponent<MeshRenderer>();
-                        rend.material.mainTexture = MapManager.Get_Tile_From_Atlas(Sprite_Num);
-                        break;
-                    }
+
+                if (Tile_Sort.TileObject == eTileObject.DOOR)
+                {
+                    if(Tile.Tile_Actor != null)
+                        z_axis = 1;
+                }
+                    
+                //this.transform.position = new Vector3(Tile.x, Tile.y, -0.5f);
+
+
             }
+            else                        //벽오브젝트가 아니면
+            {
+
+                Nomal_Object.SetActive(true);
+                //
+
+                int Sprite_Num = (int)Tile_Sort.TileBase - 1;
+                rend = Nomal_Object.GetComponent<MeshRenderer>();
+                rend.material.mainTexture = MapManager.Get_TileBase_From_List(Sprite_Num);
+
+                if(Tile_Sort.TileObject == eTileObject.NULL)   //오브젝트가 없으면)
+                {
+
+                }
+                    
+            }
+
         }
+
+        this.transform.position = new Vector3(Tile.x, Tile.y, z_axis);
+
     }
     private void Update_Sight_Sort(Sight_Sort Sight_Sort)
     {
-        if(Active_Tile != null)
+        if(tile_Sort.TileBase != eTileBase.NULL)
         {
             switch (Sight_Sort)
             {
@@ -127,5 +137,12 @@ public class Tile_Obj : MonoBehaviour
     {
         return this.Array_Index;
     }
+
+    public MeshRenderer get_rend()
+    {
+        return rend;
+    }
+
+
 
 }
