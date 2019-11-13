@@ -10,11 +10,16 @@ public class UIManager : MonoBehaviour, IManager
     private MapManager MapManager;
     private PlayerManager PlayerManager;
 
+
     [SerializeField] private Inventory Inventory;
+    [SerializeField] private Infomation Infomation;
     [SerializeField] private Option Option;
     [SerializeField] private GameObject UI_BackGround;
     [SerializeField] private Modle_Holder Modle_Holder;
     [SerializeField] private UI_Button UI_Button;
+    [SerializeField] private Log UI_Log;
+    [SerializeField] private UIBar UI_Health_Bar;
+    [SerializeField] private UIBar UI_Mana_Bar;
 
     private Stack<IUI> active_ui;
     public IUI Active_UI
@@ -66,6 +71,8 @@ public class UIManager : MonoBehaviour, IManager
         Inventory.Set_UI(this);
         Inventory.Set_Item(this.ItemManager);
 
+        Infomation.Set_UI(this);
+
         Modle_Holder.Set_Holder(this, this.MapManager);
 
         UI_Button.Set_UI(this);
@@ -79,6 +86,11 @@ public class UIManager : MonoBehaviour, IManager
 
     public void Update_Manager()    //Update에 해당, 매 프레임마다 갱신
     {
+        //UI_Health_Bar.SetValue(basePlayer.current_HP, basePlayer.max_HP);
+        //UI_Mana_Bar.SetValue(basePlayer.current_MP, basePlayer.max_MP);
+
+        UI_Health_Bar.SetValue(50, 100);
+        UI_Mana_Bar.SetValue(70, 100);
 
     }
 
@@ -90,6 +102,11 @@ public class UIManager : MonoBehaviour, IManager
     public Inventory Get_Inventory_Function()
     {
         return this.Inventory;
+    }
+
+    public Infomation Get_Infomation_Function()
+    {
+        return this.Infomation;
     }
 
     public Option Get_Option_Function()

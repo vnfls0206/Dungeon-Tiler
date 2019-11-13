@@ -40,7 +40,6 @@ public class Inventory : MonoBehaviour, UIManager.IUI
     }
 
     public Explain_Window Explain_Window;
-    public Log log;
 
     public void Set_UI(UIManager uImanager)
     {

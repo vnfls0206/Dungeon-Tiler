@@ -21,6 +21,7 @@ public class BasePlayer : BaseActor
     int experience;
     int total_experience;
     int gold;
+
     //int equip[4]; //장비 구현은 무엇으로?
     //int last_unequip;
 
@@ -37,10 +38,17 @@ public class BasePlayer : BaseActor
     int normal_vision;       //평소 시야
     int current_vision;
 
+    public int State_Level() { return max_level;}
 
+    public int State_Exp() { return experience; }
+    public int State_TotalExp() { return total_experience; }
 
+    public int State_Gold() { return gold; }
 
     public int State_maxhp() { return max_HP; }
     public int State_currenthp() { return current_HP; }
-   
+
+    public int State_maxmp() { return max_MP; }
+    public int State_currentmp() { return current_MP; }
+
 }

@@ -34,6 +34,10 @@ public class UI_Button : MonoBehaviour
     {
         UIManager.Get_Option_Function().Set_Activate();
     }
+    public void OnInfomation()
+    {
+        UIManager.Get_Infomation_Function().Set_Activate();
+    }
 
     public void WeaponTabActive()
     {
